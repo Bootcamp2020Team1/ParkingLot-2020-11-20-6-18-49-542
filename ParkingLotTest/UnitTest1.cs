@@ -9,7 +9,7 @@ namespace ParkingLotTest
         public void Test1()
         {
             var class1 = new Class1();
-            Assert.NotNull(null);
+            Assert.NotNull(class1);
         }
     }
 }
