@@ -31,7 +31,7 @@ namespace ParkingLotTest
             //when
             var parkingBoy = new ParkingBoy(new ParkingLot());
             var ticket = parkingBoy.Park(expectedCar);
-            var car = parkingBoy.Fetch(ticket);
+            var car = parkingBoy.Fetch(ticket, out _);
 
             //then
             Assert.Equal(expectedCar.GetType(), car.GetType());
@@ -48,7 +48,7 @@ namespace ParkingLotTest
             var carList = new List<Car>() { new Car("car1"), new Car("car2"), new Car("car3") };
             carList.ForEach(car => parkingBoy.Park(car));
             var ticket = parkingBoy.Park(expectedCar);
-            var car = parkingBoy.Fetch(ticket);
+            var car = parkingBoy.Fetch(ticket, out _);
 
             //then
             Assert.Equal(expectedCar, car);
@@ -59,12 +59,12 @@ namespace ParkingLotTest
         {
             //given
             var expectedCar = new Car("N98245");
+            var parkingBoy = new ParkingBoy(new ParkingLot());
+            parkingBoy.Park(expectedCar);
+            var wrongTicket = new Ticket("123", "wrongNumber");
 
             //when
-            var parkingBoy = new ParkingBoy(new ParkingLot());
-            var ticket = parkingBoy.Park(expectedCar);
-            var wrongTicket = new Ticket("123", "wrongNumber");
-            var car = parkingBoy.Fetch(wrongTicket);
+            var car = parkingBoy.Fetch(wrongTicket, out _);
 
             //then
             Assert.Null(car);
@@ -78,7 +78,7 @@ namespace ParkingLotTest
 
             //when
             var parkingBoy = new ParkingBoy(new ParkingLot());
-            var car = parkingBoy.Fetch(null);
+            var car = parkingBoy.Fetch(null, out _);
 
             //then
             Assert.Null(car);
@@ -91,10 +91,10 @@ namespace ParkingLotTest
             var parkedCar = new Car("N98245");
             var parkingBoy = new ParkingBoy(new ParkingLot());
             var ticket = parkingBoy.Park(parkedCar);
-            parkingBoy.Fetch(ticket);
+            parkingBoy.Fetch(ticket, out _);
 
             //when
-            var car = parkingBoy.Fetch(ticket);
+            var car = parkingBoy.Fetch(ticket, out _);
 
             //then
             Assert.Null(car);
@@ -124,6 +124,38 @@ namespace ParkingLotTest
 
             //then
             Assert.Equal(10, parkingLot.Capacity);
+        }
+
+        [Fact]
+        public void Should_Get_Error_Message_Unrecognized_parking_ticket_Given_A_Wrong_Ticket_When_Fetch_Car()
+        {
+            //given
+            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var wrongTicket = new Ticket("123", "wrongNumber");
+
+            //when
+            var errorMessage = string.Empty;
+            parkingBoy.Fetch(wrongTicket, out errorMessage);
+
+            //then
+            Assert.Equal("Unrecognized parking ticket.", errorMessage);
+        }
+
+        [Fact]
+        public void Should_Get_Error_Message_Unrecognized_parking_ticket_Given_A_Used_Ticket_When_Fetch_Car()
+        {
+            //given
+            var parkedCar = new Car("N98245");
+            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var ticket = parkingBoy.Park(parkedCar);
+            parkingBoy.Fetch(ticket, out _);
+
+            //when
+            var errorMessage = string.Empty;
+            parkingBoy.Fetch(ticket, out errorMessage);
+
+            //then
+            Assert.Equal("Unrecognized parking ticket.", errorMessage);
         }
     }
 }

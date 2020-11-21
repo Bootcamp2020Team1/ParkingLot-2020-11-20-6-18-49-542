@@ -19,8 +19,9 @@ namespace ParkingLotCLI
             return ticket;
         }
 
-        public Car Fetch(Ticket ticket)
+        public Car Fetch(Ticket ticket, out string errorMessage)
         {
+            errorMessage = string.Empty;
             if (ticket == null)
             {
                 return null;
@@ -28,11 +29,13 @@ namespace ParkingLotCLI
 
             var car = parkingLot.GetCarByTicket(ticket.TicketNumber);
 
-            if (car != null)
+            if (car == null)
             {
-                parkingLot.RemoveTheCar(ticket.TicketNumber);
+                errorMessage = "Unrecognized parking ticket.";
+                return null;
             }
 
+            parkingLot.RemoveTheCar(ticket.TicketNumber);
             return car;
         }
     }
