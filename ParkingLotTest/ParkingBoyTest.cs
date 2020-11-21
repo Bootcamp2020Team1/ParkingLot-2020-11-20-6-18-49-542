@@ -375,5 +375,18 @@ namespace ParkingLotTest
             //then
             Assert.Equal(id_1.ToString(), ticket.ParkingLotID);
         }
+
+        [Fact]
+        public void Should__Manager_Park_Car_In_His_Own_Parking_Lot()
+        {
+            //given
+            var parkingBoy = new ServiceManager(new List<ParkingLot>() { new ParkingLot() });
+
+            //when
+            var ticket = parkingBoy.Park(new Car("N98245"), out _);
+
+            //then
+            Assert.Contains(ticket.ParkingLotID, parkingBoy.IdOfParkingLots);
+        }
     }
 }
