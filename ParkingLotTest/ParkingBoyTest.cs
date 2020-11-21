@@ -6,7 +6,7 @@ using Xunit;
 
 namespace ParkingLotTest
 {
-    public class ParkingBoyTest
+    public class ParkingLotCLITest
     {
         [Fact]
         public void Should_Parking_Boy_Park_A_Car_And_Get_Ticket()
@@ -98,6 +98,32 @@ namespace ParkingLotTest
 
             //then
             Assert.Null(car);
+        }
+
+        [Fact]
+        public void Should_Park_No_Car_Given_Parking_Lot_Has_No_Position()
+        {
+            //given
+            var parkedCar = new Car("N98245");
+            var parkingBoy = new ParkingBoy(new ParkingLot(1));
+            parkingBoy.Park(parkedCar);
+
+            //when
+            var newCar = new Car("A982453");
+            var newTicket = parkingBoy.Park(newCar);
+
+            //then
+            Assert.Null(newTicket);
+        }
+
+        [Fact]
+        public void Should_The_Defualt_Capacity_Of_Parking_Lot_Is_10()
+        {
+            //when
+            var parkingLot = new ParkingLot();
+
+            //then
+            Assert.Equal(10, parkingLot.Capacity);
         }
     }
 }

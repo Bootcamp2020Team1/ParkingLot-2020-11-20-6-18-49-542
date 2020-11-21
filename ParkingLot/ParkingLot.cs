@@ -12,13 +12,20 @@ namespace ParkingLotCLI
         {
             cars = new Dictionary<string, Car>();
             ParkingLotID = "123";
+            Capacity = 10;
+        }
+
+        public ParkingLot(int capacity) : this()
+        {
+            Capacity = capacity;
         }
 
         public string ParkingLotID { get; }
+        public int Capacity { get; }
 
         internal Ticket AddCar(Car car)
         {
-            if (cars.ContainsValue(car))
+            if (cars.Count == Capacity || cars.ContainsValue(car))
             {
                 return null;
             }
