@@ -19,24 +19,26 @@ namespace ParkingLotCLI
             managementList.Add(parkingBoy);
         }
 
-        public Ticket Park(Car car, ParkingBoy parkingBoy)
+        public Ticket Park(Car car, ParkingBoy parkingBoy, out string errorMessage)
         {
+            errorMessage = string.Empty;
             if (managementList.Find(parkingBoyInList => parkingBoyInList == parkingBoy) == null)
             {
                 return null;
             }
 
-            return parkingBoy.Park(car, out _);
+            return parkingBoy.Park(car, out errorMessage);
         }
 
-        public Car Fetch(Ticket ticket, ParkingBoy parkingBoy)
+        public Car Fetch(Ticket ticket, ParkingBoy parkingBoy, out string errorMessage)
         {
+            errorMessage = string.Empty;
             if (managementList.Find(parkingBoyInList => parkingBoyInList == parkingBoy) == null)
             {
                 return null;
             }
 
-            return parkingBoy.Fetch(ticket, out _);
+            return parkingBoy.Fetch(ticket, out errorMessage);
         }
     }
 }

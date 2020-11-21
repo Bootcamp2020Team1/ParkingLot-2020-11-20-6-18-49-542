@@ -263,7 +263,7 @@ namespace ParkingLotTest
             serviceManager.AddParkingBoy(parkingBoy);
 
             //when
-            var ticket = serviceManager.Park(new Car("N98245"), parkingBoy);
+            var ticket = serviceManager.Park(new Car("N98245"), parkingBoy, out _);
 
             //then
             Assert.Equal(expectedTicket.GetType(), ticket.GetType());
@@ -278,7 +278,7 @@ namespace ParkingLotTest
             var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
 
             //when
-            var ticket = serviceManager.Park(new Car("N98245"), parkingBoy);
+            var ticket = serviceManager.Park(new Car("N98245"), parkingBoy, out _);
 
             //then
             Assert.Null(ticket);
@@ -294,7 +294,7 @@ namespace ParkingLotTest
             serviceManager.AddParkingBoy(parkingBoy);
 
             //when
-            var ticket = serviceManager.Park(new Car("N98245"), parkingBoy);
+            var ticket = serviceManager.Park(new Car("N98245"), parkingBoy, out _);
 
             //then
             Assert.Contains(ticket.ParkingLotID, parkingBoy.IdOfParkingLots);
@@ -308,10 +308,10 @@ namespace ParkingLotTest
             var serviceManager = new ServiceManager(new List<ParkingLot>() { new ParkingLot() });
             var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
             serviceManager.AddParkingBoy(parkingBoy);
-            var ticket = serviceManager.Park(new Car("N98245"), parkingBoy);
+            var ticket = serviceManager.Park(new Car("N98245"), parkingBoy, out _);
 
             //when
-            var car = serviceManager.Fetch(ticket, parkingBoy);
+            var car = serviceManager.Fetch(ticket, parkingBoy, out _);
 
             //then
             Assert.Equal(carType.GetType(), car.GetType());
@@ -325,7 +325,7 @@ namespace ParkingLotTest
             var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
 
             //when
-            var car = serviceManager.Fetch(new Ticket("ParkingLotID", "ticketNumber"), parkingBoy);
+            var car = serviceManager.Fetch(new Ticket("ParkingLotID", "ticketNumber"), parkingBoy, out _);
 
             //then
             Assert.Null(car);
@@ -387,6 +387,38 @@ namespace ParkingLotTest
 
             //then
             Assert.Contains(ticket.ParkingLotID, parkingBoy.IdOfParkingLots);
+        }
+
+        [Fact]
+        public void Should_Manager_Display_Error_Message_When_Specify_A_Parking_Boy_To_Fetch_Car_Given_Null_Ticket()
+        {
+            //given
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
+            var serviceManager = new ServiceManager(new List<ParkingLot>() { new ParkingLot() });
+            serviceManager.AddParkingBoy(parkingBoy);
+
+            //when
+            var errorMessage = string.Empty;
+            serviceManager.Fetch(null, parkingBoy, out errorMessage);
+
+            //then
+            Assert.Equal("Please provide your parking ticket.", errorMessage);
+        }
+
+        [Fact]
+        public void Should_Manager_Display_Error_Message_When_Specify_A_Parking_Boy_To_Park_Car_Given_Used_Ticket()
+        {
+            //given
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot(0) });
+            var serviceManager = new ServiceManager(new List<ParkingLot>() { new ParkingLot() });
+            serviceManager.AddParkingBoy(parkingBoy);
+
+            //when
+            var errorMessage = string.Empty;
+            serviceManager.Park(new Car("car"), parkingBoy, out errorMessage);
+
+            //then
+            Assert.Equal("Not enough position.", errorMessage);
         }
     }
 }
