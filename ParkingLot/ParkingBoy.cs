@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Linq;
 namespace ParkingLotCLI
 {
     public class ParkingBoy
@@ -9,6 +9,14 @@ namespace ParkingLotCLI
         public ParkingBoy(List<ParkingLot> parkingLots)
         {
             ParkingLots = parkingLots;
+        }
+
+        public List<string> IdOfParkingLots
+        {
+            get
+            {
+                return ParkingLots.Select(parkingLot => parkingLot.ParkingLotID).ToList();
+            }
         }
 
         protected List<ParkingLot> ParkingLots { get; }

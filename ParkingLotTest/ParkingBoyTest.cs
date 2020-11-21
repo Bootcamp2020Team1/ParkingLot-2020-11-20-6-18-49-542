@@ -252,5 +252,36 @@ namespace ParkingLotTest
             //then
             Assert.Equal(id_1.ToString(), ticket.ParkingLotID);
         }
+
+        [Fact]
+        public void Should__Manager_Specify_The_Parking_Boy_To_Park_The_Car_Given_The_Parking_Boy_Is_In_ManagementList()
+        {
+            //given
+            var expectedTicket = new Ticket("1234", "N98245");
+            var serviceManager = new ServiceManager();
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
+            serviceManager.AddParkingBoy(parkingBoy);
+
+            //when
+            var ticket = serviceManager.Park(new Car("N98245"), parkingBoy);
+
+            //then
+            Assert.Equal(expectedTicket.GetType(), ticket.GetType());
+        }
+
+        [Fact]
+        public void Should__Manager_Cannot_Specify_The_Parking_Boy_To_Park_The_Car_Given_The_Parking_Boy_Is_Not_In_ManagementList()
+        {
+            //given
+            var expectedTicket = new Ticket("1234", "N98245");
+            var serviceManager = new ServiceManager();
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
+
+            //when
+            var ticket = serviceManager.Park(new Car("N98245"), parkingBoy);
+
+            //then
+            Assert.Null(ticket);
+        }
     }
 }
