@@ -37,7 +37,7 @@ namespace ParkingLotCLI
 
         internal Ticket AddCar(Car car)
         {
-            if (IsFull || cars.ContainsValue(car))
+            if (IsFull || car == null || cars.ContainsValue(car))
             {
                 return null;
             }

@@ -6,12 +6,12 @@ namespace ParkingLotCLI
 {
     public class ParkingBoy
     {
-        private List<ParkingLot> parkingLots;
-
         public ParkingBoy(List<ParkingLot> parkingLots)
         {
-            this.parkingLots = parkingLots;
+            ParkingLots = parkingLots;
         }
+
+        protected List<ParkingLot> ParkingLots { get; }
 
         public Ticket Park(Car car, out string errorMessage)
         {
@@ -61,12 +61,12 @@ namespace ParkingLotCLI
 
         private ParkingLot ChooseParkingLotSequentially()
         {
-            return parkingLots.Find(parkingLot => parkingLot.IsFull == false);
+            return ParkingLots.Find(parkingLot => parkingLot.IsFull == false);
         }
 
         private ParkingLot GetParkingLotByTicket(Ticket ticket)
         {
-            return parkingLots.Find(parkingLot => parkingLot.ParkingLotID == ticket.ParkingLotID);
+            return ParkingLots.Find(parkingLot => parkingLot.ParkingLotID == ticket.ParkingLotID);
         }
     }
 }
