@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ParkingLotTest
 {
     using ParkingLot;
@@ -6,10 +8,15 @@ namespace ParkingLotTest
     public class UnitTest1
     {
         [Fact]
-        public void Test1()
+        public void Should_Return_ticket()
         {
-            var class1 = new Class1();
-            Assert.Null(class1);
+            var parkingLot = new ParkingLot(4, 1);
+            var parkingLotList = new List<ParkingLot>();
+            parkingLotList.Add(parkingLot);
+            var parkingBoy = new ParkingBoy(parkingLotList);
+            var ticket = parkingBoy.ParkACarAndGetTicket("abc123");
+
+            Assert.Equal("Your car abc123 have been parked to parking lot number 1", ticket);
         }
     }
 }
