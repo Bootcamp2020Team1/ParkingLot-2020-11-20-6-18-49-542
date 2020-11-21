@@ -24,6 +24,7 @@ namespace ParkingLotCLI
             errorMessage = string.Empty;
             if (ticket == null)
             {
+                errorMessage = "Please provide your parking ticket.";
                 return null;
             }
 

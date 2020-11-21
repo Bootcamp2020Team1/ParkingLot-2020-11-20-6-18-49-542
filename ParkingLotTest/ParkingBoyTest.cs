@@ -157,5 +157,19 @@ namespace ParkingLotTest
             //then
             Assert.Equal("Unrecognized parking ticket.", errorMessage);
         }
+
+        [Fact]
+        public void Should_Get_Error_Message_Given_A_Null_Ticket_When_Fetch_Car()
+        {
+            //given
+            var parkingBoy = new ParkingBoy(new ParkingLot());
+
+            //when
+            var errorMessage = string.Empty;
+            parkingBoy.Fetch(null, out errorMessage);
+
+            //then
+            Assert.Equal("Please provide your parking ticket.", errorMessage);
+        }
     }
 }
