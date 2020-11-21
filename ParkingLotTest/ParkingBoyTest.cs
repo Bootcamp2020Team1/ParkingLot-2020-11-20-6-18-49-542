@@ -53,5 +53,35 @@ namespace ParkingLotTest
             //then
             Assert.Equal(expectedCar, car);
         }
+
+        [Fact]
+        public void Should_Parking_Boy_Fetch_No_Cars_Given_The_Wrong_Ticket()
+        {
+            //given
+            var expectedCar = new Car("N98245");
+
+            //when
+            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var ticket = parkingBoy.Park(expectedCar);
+            var wrongTicket = new Ticket("123", "wrongNumber");
+            var car = parkingBoy.Fetch(wrongTicket);
+
+            //then
+            Assert.Null(car);
+        }
+
+        [Fact]
+        public void Should_Parking_Boy_Fetch_No_Cars_Given_The_No_Ticket()
+        {
+            //given
+            var expectedCar = new Car("N98245");
+
+            //when
+            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var car = parkingBoy.Fetch(null);
+
+            //then
+            Assert.Null(car);
+        }
     }
 }

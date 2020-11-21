@@ -28,9 +28,14 @@ namespace ParkingLotCLI
             return ticket;
         }
 
-        internal Car GetCarByTicket(Ticket ticket)
+        internal Car GetCarByTicket(string ticketNumber)
         {
-            return cars[ticket.TicketNumber];
+            if (ticketNumber == null || !cars.ContainsKey(ticketNumber))
+            {
+                return null;
+            }
+
+            return cars[ticketNumber];
         }
 
         private string GenerateUniqueTicketNumber()

@@ -21,7 +21,12 @@ namespace ParkingLotCLI
 
         public Car Fetch(Ticket ticket)
         {
-            var car = parkingLot.GetCarByTicket(ticket);
+            if (ticket == null)
+            {
+                return null;
+            }
+
+            var car = parkingLot.GetCarByTicket(ticket.TicketNumber);
             return car;
         }
     }
