@@ -18,14 +18,24 @@ namespace ParkingLotCLI
 
         internal Ticket AddCar(Car car)
         {
-            var ticket = new Ticket(ParkingLotID, "ticket number");
+            if (cars.ContainsValue(car))
+            {
+                return null;
+            }
+
+            var ticket = new Ticket(ParkingLotID, GenerateUniqueTicketNumber());
             cars.Add(ticket.TicketNumber, car);
             return ticket;
         }
 
         internal Car GetCarByTicket(Ticket ticket)
         {
-            return new Car("N958673");
+            return cars[ticket.TicketNumber];
+        }
+
+        private string GenerateUniqueTicketNumber()
+        {
+            return Guid.NewGuid().ToString("N");
         }
     }
 }

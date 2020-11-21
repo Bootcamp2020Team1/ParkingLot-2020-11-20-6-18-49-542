@@ -36,5 +36,22 @@ namespace ParkingLotTest
             //then
             Assert.Equal(expectedCar.GetType(), car.GetType());
         }
+
+        [Fact]
+        public void Should_Parking_Boy_Park_Mutiple_Cars_And_Fetch_The_Right_Car_Using_Ticket()
+        {
+            //given
+            var expectedCar = new Car("N98245");
+
+            //when
+            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var carList = new List<Car>() { new Car("car1"), new Car("car2"), new Car("car3") };
+            carList.ForEach(car => parkingBoy.Park(car));
+            var ticket = parkingBoy.Park(expectedCar);
+            var car = parkingBoy.Fetch(ticket);
+
+            //then
+            Assert.Equal(expectedCar, car);
+        }
     }
 }
