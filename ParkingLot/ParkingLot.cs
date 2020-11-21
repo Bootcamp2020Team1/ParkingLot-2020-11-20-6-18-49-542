@@ -23,9 +23,17 @@ namespace ParkingLotCLI
         public string ParkingLotID { get; }
         public int Capacity { get; }
 
-        internal Ticket AddCar(Car car)
+        internal Ticket AddCar(Car car, out string errorMessage)
         {
-            if (cars.Count == Capacity || cars.ContainsValue(car))
+            errorMessage = string.Empty;
+
+            if (cars.Count == Capacity)
+            {
+                errorMessage = "Not enough position.";
+                return null;
+            }
+
+            if (cars.ContainsValue(car))
             {
                 return null;
             }

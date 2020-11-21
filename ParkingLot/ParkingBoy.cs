@@ -13,9 +13,9 @@ namespace ParkingLotCLI
             this.parkingLot = parkingLot;
         }
 
-        public Ticket Park(Car car)
+        public Ticket Park(Car car, out string errorMessage)
         {
-            var ticket = parkingLot.AddCar(car);
+            var ticket = parkingLot.AddCar(car, out errorMessage);
             return ticket;
         }
 
@@ -38,6 +38,11 @@ namespace ParkingLotCLI
 
             parkingLot.RemoveTheCar(ticket.TicketNumber);
             return car;
+        }
+
+        public void Park(Car car)
+        {
+            throw new NotImplementedException();
         }
     }
 }
