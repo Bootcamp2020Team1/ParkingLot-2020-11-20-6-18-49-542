@@ -38,6 +38,11 @@ namespace ParkingLotCLI
             return cars[ticketNumber];
         }
 
+        internal bool RemoveTheCar(string ticketNumbre)
+        {
+            return cars.Remove(ticketNumbre);
+        }
+
         private string GenerateUniqueTicketNumber()
         {
             return Guid.NewGuid().ToString("N");

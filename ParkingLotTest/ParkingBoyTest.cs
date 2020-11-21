@@ -83,5 +83,21 @@ namespace ParkingLotTest
             //then
             Assert.Null(car);
         }
+
+        [Fact]
+        public void Should_Parking_Boy_Fetch_No_Car_Given_The_Ticket_Has_Been_Used()
+        {
+            //given
+            var parkedCar = new Car("N98245");
+            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var ticket = parkingBoy.Park(parkedCar);
+            parkingBoy.Fetch(ticket);
+
+            //when
+            var car = parkingBoy.Fetch(ticket);
+
+            //then
+            Assert.Null(car);
+        }
     }
 }

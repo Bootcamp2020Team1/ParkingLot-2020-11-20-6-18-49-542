@@ -27,6 +27,12 @@ namespace ParkingLotCLI
             }
 
             var car = parkingLot.GetCarByTicket(ticket.TicketNumber);
+
+            if (car != null)
+            {
+                parkingLot.RemoveTheCar(ticket.TicketNumber);
+            }
+
             return car;
         }
     }
