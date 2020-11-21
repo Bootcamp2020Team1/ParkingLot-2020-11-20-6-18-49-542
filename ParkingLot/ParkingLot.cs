@@ -11,7 +11,7 @@ namespace ParkingLotCLI
         public ParkingLot()
         {
             cars = new Dictionary<string, Car>();
-            ParkingLotID = "123";
+            ParkingLotID = Guid.NewGuid().ToString();
             Capacity = 10;
         }
 
@@ -20,20 +20,24 @@ namespace ParkingLotCLI
             Capacity = capacity;
         }
 
+        public ParkingLot(Guid id, int capacity) : this(capacity)
+        {
+            ParkingLotID = id.ToString();
+        }
+
         public string ParkingLotID { get; }
         public int Capacity { get; }
-
-        internal Ticket AddCar(Car car, out string errorMessage)
+        public bool IsFull
         {
-            errorMessage = string.Empty;
-
-            if (cars.Count == Capacity)
+            get
             {
-                errorMessage = "Not enough position.";
-                return null;
+                return Capacity <= cars.Count;
             }
+        }
 
-            if (cars.ContainsValue(car))
+        internal Ticket AddCar(Car car)
+        {
+            if (IsFull || cars.ContainsValue(car))
             {
                 return null;
             }

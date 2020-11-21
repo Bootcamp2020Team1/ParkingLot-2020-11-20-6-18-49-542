@@ -15,7 +15,7 @@ namespace ParkingLotTest
             var expectedTicket = new Ticket("1234", "N98245");
 
             //when
-            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
             var ticket = parkingBoy.Park(new Car("N98245"), out _);
 
             //then
@@ -29,7 +29,7 @@ namespace ParkingLotTest
             var expectedCar = new Car("N98245");
 
             //when
-            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
             var ticket = parkingBoy.Park(expectedCar, out _);
             var car = parkingBoy.Fetch(ticket, out _);
 
@@ -44,7 +44,7 @@ namespace ParkingLotTest
             var expectedCar = new Car("N98245");
 
             //when
-            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
             var carList = new List<Car>() { new Car("car1"), new Car("car2"), new Car("car3") };
             carList.ForEach(car => parkingBoy.Park(car, out _));
             var ticket = parkingBoy.Park(expectedCar, out _);
@@ -59,8 +59,8 @@ namespace ParkingLotTest
         {
             //given
             var expectedCar = new Car("N98245");
-            var parkingBoy = new ParkingBoy(new ParkingLot());
-            parkingBoy.Park(expectedCar);
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
+            parkingBoy.Park(expectedCar, out _);
             var wrongTicket = new Ticket("123", "wrongNumber");
 
             //when
@@ -77,7 +77,7 @@ namespace ParkingLotTest
             var expectedCar = new Car("N98245");
 
             //when
-            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
             var car = parkingBoy.Fetch(null, out _);
 
             //then
@@ -89,7 +89,7 @@ namespace ParkingLotTest
         {
             //given
             var parkedCar = new Car("N98245");
-            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
             var ticket = parkingBoy.Park(parkedCar, out _);
             parkingBoy.Fetch(ticket, out _);
 
@@ -105,8 +105,8 @@ namespace ParkingLotTest
         {
             //given
             var parkedCar = new Car("N98245");
-            var parkingBoy = new ParkingBoy(new ParkingLot(1));
-            parkingBoy.Park(parkedCar);
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot(1) });
+            parkingBoy.Park(parkedCar, out _);
 
             //when
             var newCar = new Car("A982453");
@@ -130,8 +130,9 @@ namespace ParkingLotTest
         public void Should_Get_Error_Message_Unrecognized_parking_ticket_Given_A_Wrong_Ticket_When_Fetch_Car()
         {
             //given
-            var parkingBoy = new ParkingBoy(new ParkingLot());
-            var wrongTicket = new Ticket("123", "wrongNumber");
+            var guid = Guid.NewGuid();
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot(guid, 10) });
+            var wrongTicket = new Ticket(guid.ToString(), "wrongNumber");
 
             //when
             var errorMessage = string.Empty;
@@ -146,7 +147,7 @@ namespace ParkingLotTest
         {
             //given
             var parkedCar = new Car("N98245");
-            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
             var ticket = parkingBoy.Park(parkedCar, out _);
             parkingBoy.Fetch(ticket, out _);
 
@@ -162,7 +163,7 @@ namespace ParkingLotTest
         public void Should_Get_Error_Message_Given_A_Null_Ticket_When_Fetch_Car()
         {
             //given
-            var parkingBoy = new ParkingBoy(new ParkingLot());
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
 
             //when
             var errorMessage = string.Empty;
@@ -176,7 +177,7 @@ namespace ParkingLotTest
         public void Should_Get_Error_Message_Given_The_Parking_Lot_Is_Full_When_Park_Car()
         {
             //given
-            var parkingBoy = new ParkingBoy(new ParkingLot(0));
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot(0) });
 
             //when
             var errorMessage = string.Empty;
@@ -184,6 +185,39 @@ namespace ParkingLotTest
 
             //then
             Assert.Equal("Not enough position.", errorMessage);
+        }
+
+        [Fact]
+        public void Should_Park_The_Car_To_Mutiple_Parking_Lots_Sequentially()
+        {
+            //given
+            var id_1 = Guid.NewGuid();
+            var id_2 = Guid.NewGuid();
+
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot(id_1, 1), new ParkingLot(id_2, 2) });
+
+            //when
+            var ticket = parkingBoy.Park(null, out _);
+
+            //then
+            Assert.Equal(id_1.ToString(), ticket.ParkingLotID);
+        }
+
+        [Fact]
+        public void Should_Park_The_Car_To_Mutiple_Parking_Lots_And_Park_To_Next_One_If_Previous_Is_Full()
+        {
+            //given
+            var id_1 = Guid.NewGuid();
+            var id_2 = Guid.NewGuid();
+
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot(id_1, 1), new ParkingLot(id_2, 2) });
+
+            //when
+            var ticket1 = parkingBoy.Park(null, out _);
+            var ticket2 = parkingBoy.Park(null, out _);
+
+            //then
+            Assert.Equal(id_2.ToString(), ticket2.ParkingLotID);
         }
     }
 }

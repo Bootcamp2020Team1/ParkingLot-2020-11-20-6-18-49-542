@@ -6,30 +6,44 @@ namespace ParkingLotCLI
 {
     public class ParkingBoy
     {
-        private ParkingLot parkingLot;
+        private List<ParkingLot> parkingLots;
 
-        public ParkingBoy(ParkingLot parkingLot)
+        public ParkingBoy(List<ParkingLot> parkingLots)
         {
-            this.parkingLot = parkingLot;
+            this.parkingLots = parkingLots;
         }
 
         public Ticket Park(Car car, out string errorMessage)
         {
-            var ticket = parkingLot.AddCar(car, out errorMessage);
+            errorMessage = string.Empty;
+            var parkingLot = ChooseParkingLot();
+            if (parkingLot == null)
+            {
+                errorMessage = "Not enough position.";
+                return null;
+            }
+
+            var ticket = parkingLot.AddCar(car);
             return ticket;
         }
 
         public Car Fetch(Ticket ticket, out string errorMessage)
         {
             errorMessage = string.Empty;
+
             if (ticket == null)
             {
                 errorMessage = "Please provide your parking ticket.";
                 return null;
             }
 
-            var car = parkingLot.GetCarByTicket(ticket.TicketNumber);
+            var parkingLot = GetParkingLotByTicket(ticket);
+            if (parkingLot == null)
+            {
+                return null;
+            }
 
+            var car = parkingLot.GetCarByTicket(ticket.TicketNumber);
             if (car == null)
             {
                 errorMessage = "Unrecognized parking ticket.";
@@ -40,9 +54,19 @@ namespace ParkingLotCLI
             return car;
         }
 
-        public void Park(Car car)
+        protected virtual ParkingLot ChooseParkingLot()
         {
-            throw new NotImplementedException();
+            return ChooseParkingLotSequentially();
+        }
+
+        private ParkingLot ChooseParkingLotSequentially()
+        {
+            return parkingLots.Find(parkingLot => parkingLot.IsFull == false);
+        }
+
+        private ParkingLot GetParkingLotByTicket(Ticket ticket)
+        {
+            return parkingLots.Find(parkingLot => parkingLot.ParkingLotID == ticket.ParkingLotID);
         }
     }
 }
