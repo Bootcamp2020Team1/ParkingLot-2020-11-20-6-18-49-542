@@ -27,11 +27,19 @@ namespace ParkingLotCLI
 
         public string ParkingLotID { get; }
         public int Capacity { get; }
+        public int PositionAvailable
+        {
+            get
+            {
+                return Capacity - cars.Count;
+            }
+        }
+
         public bool IsFull
         {
             get
             {
-                return Capacity <= cars.Count;
+                return PositionAvailable <= 0;
             }
         }
 
