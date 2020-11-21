@@ -28,15 +28,5 @@ namespace ParkingLotCLI
 
             return parkingBoy.Park(car, out _);
         }
-
-        public Car Fetch(Ticket ticket, ParkingBoy parkingBoy)
-        {
-            if (managementList.Find(parkingBoyInList => parkingBoyInList == parkingBoy) == null)
-            {
-                return null;
-            }
-
-            return parkingBoy.Fetch(ticket, out _);
-        }
     }
 }
