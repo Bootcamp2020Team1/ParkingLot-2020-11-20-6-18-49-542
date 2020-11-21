@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace ParkingLotCLI
 {
-    public class ServiceManager
+    public class ServiceManager : ParkingBoy
     {
         private readonly List<ParkingBoy> managementList;
 
-        public ServiceManager()
+        public ServiceManager(List<ParkingLot> parkingLots) : base(parkingLots)
         {
             this.managementList = new List<ParkingBoy>();
         }
