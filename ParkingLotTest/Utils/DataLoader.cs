@@ -11,9 +11,8 @@ namespace ParkingLotTest.Utils
         {
             return new Lot[]
             {
-                new Lot("MyLot1", 1),
-                new Lot("MyLot2", 2),
-                new Lot("MyLot3"),
+                new Lot("MyLot1", 3),
+                new Lot("MyLot2"),
             };
         }
     }

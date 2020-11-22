@@ -1,13 +1,13 @@
+using ParkingLot;
+using ParkingLot.DataModels;
+using ParkingLotTest.Utils;
+using Xunit;
+
 namespace ParkingLotTest
 {
-    using ParkingLot;
-    using ParkingLot.DataModels;
-    using Utils;
-    using Xunit;
-
     public class ParkingBoyModelsTest
     {
-        private ParkingBoy myBoy;
+        private readonly ParkingBoy myBoy;
         public ParkingBoyModelsTest()
         {
             myBoy = new ParkingBoy(DataLoader.GetParkingLots());
@@ -85,6 +85,18 @@ namespace ParkingLotTest
 
             Assert.Equal("Unrecognized parking ticket.", fetchErrMessage2);
             Assert.Null(car2);
+        }
+
+        [Fact]
+        public void Should_simpleBoy_park_per_sequence()
+        {
+            string parkMessage = myBoy.TryPark(new Car("test plate1"), out Ticket ticket1);
+
+            Assert.Equal(string.Empty, parkMessage);
+
+            string fetchMessage = myBoy.TryFetch(ticket1, out Car car1);
+
+            Assert.Equal("test plate1", car1.Plate);
         }
     }
 }

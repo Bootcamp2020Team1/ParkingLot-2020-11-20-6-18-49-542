@@ -1,7 +1,8 @@
-﻿namespace ParkingLot.DataModels
+﻿using System;
+using System.Linq;
+
+namespace ParkingLot.DataModels
 {
-    using System;
-    using System.Linq;
     public class ParkingBoy
     {
         public ParkingBoy(Lot[] parkingLots, int id = 0)
@@ -47,6 +48,18 @@
             car = parkingLot.ReturnCar(ticket.TicketNumber);
             ticket.IsUsed = true;
             return string.Empty;
+        }
+
+        public virtual string TryPark(Car car, out Ticket ticket)
+        {
+            var currentLot = ParkingLots.FirstOrDefault(x => x.IsAvailabe);
+            return this.TryParkToSpecificLot(car, currentLot, out ticket);
+        }
+
+        public virtual string TryFetch(Ticket ticket, out Car car)
+        {
+            var currentLot = ParkingLots.FirstOrDefault(x => x.LotName == ticket.LotName);
+            return this.TryFetchFromSpecificLot(ticket, currentLot, out car);
         }
     }
 }
