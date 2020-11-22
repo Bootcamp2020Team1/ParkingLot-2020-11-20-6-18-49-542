@@ -56,10 +56,36 @@ namespace ParkingLot.DataModels
             return this.TryParkToSpecificLot(car, currentLot, out ticket);
         }
 
-        public virtual string TryFetch(Ticket ticket, out Car car)
+        public string TryFetch(Ticket ticket, out Car car)
         {
             var currentLot = ParkingLots.FirstOrDefault(x => x.LotName == ticket.LotName);
             return this.TryFetchFromSpecificLot(ticket, currentLot, out car);
+        }
+    }
+
+    public class SmartParkingBoy : ParkingBoy
+    {
+        public SmartParkingBoy(Lot[] parkingLots, int id = 0) : base(parkingLots, id)
+        {
+        }
+
+        public override string TryPark(Car car, out Ticket ticket)
+        {
+            var currentLot = ParkingLots.Where(x => x.IsAvailabe).OrderBy(x => x.AvailablePositions).LastOrDefault();
+            return TryParkToSpecificLot(car, currentLot, out ticket);
+        }
+    }
+
+    public class SuperSmartParkingBoy : ParkingBoy
+    {
+        public SuperSmartParkingBoy(Lot[] parkingLots, int id = 0) : base(parkingLots, id)
+        {
+        }
+
+        public override string TryPark(Car car, out Ticket ticket)
+        {
+            var currentLot = ParkingLots.Where(x => x.IsAvailabe).OrderBy(x => x.AvailablePositions / x.Capacity).LastOrDefault();
+            return TryParkToSpecificLot(car, currentLot, out ticket);
         }
     }
 }
