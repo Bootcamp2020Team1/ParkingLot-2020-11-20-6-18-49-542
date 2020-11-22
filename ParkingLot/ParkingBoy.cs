@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ParkingLot
@@ -19,14 +20,18 @@ namespace ParkingLot
             boysParkingLots.Add(newParkingLot);
         }
 
-        public Ticket ParkCarBoy(Car car)
+        public Ticket ParkCarBoy(Car car, string customerId)
         {
             Ticket newTicket = null;
             if (car != null && car.IsParked == false)
             {
                 ParkingLot parkingLot = this.FindAvaibleParkingLot();
-                newTicket = new Ticket(parkingLot.Id, this.Id, car.Id);
-                car.IsParked = true;
+                bool isParkSuccess = parkingLot.ParkCarLot(car);
+                if (isParkSuccess)
+                {
+                    newTicket = new Ticket(parkingLot.Id, this.Id, car.Id, customerId);
+                    car.IsParked = true;
+                }
             }
 
             return newTicket;
@@ -44,12 +49,10 @@ namespace ParkingLot
                 return "The ticket is not provided by the parking boy.";
             }
 
-            string ticketLotId = ticket.ParkingLotId;
-            ParkingLot rightLot = boysParkingLots.Find(parkingLot => parkingLot.Id == ticketLotId);
-            rightLot.FetchCarLot(ticket);
-            ticket.IsUsed = true;
-
-            return ticket.CarId;
+            var rightLot = boysParkingLots.First(parkingLot => parkingLot.Id == ticket.ParkingLotId);
+            var carFound = rightLot.FetchCarLot(ticket);
+            ticket.SetTicketAsUsed();
+            return carFound.Id;
         }
 
         public ParkingLot FindAvaibleParkingLot()

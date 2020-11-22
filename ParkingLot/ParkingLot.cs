@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class ParkingLot
     {
@@ -40,18 +41,21 @@
 
         public Car FetchCarLot(Ticket ticket)
         {
-            Car carFound = parkedCars.Find(eachParkedCar => eachParkedCar.Id == ticket.CarId);
+            Car carFound = parkedCars.First(eachParkedCar => eachParkedCar.Id == ticket.CarId);
+            //Car carFound = new Car("c1");
             if (carFound != null)
             {
-                parkedCars.RemoveAll(eachParkedCar => eachParkedCar.Id == ticket.CarId);
+                parkedCars.Remove(carFound);
             }
 
             return carFound;
         }
 
-        public void ParkCarLot(Car car)
+        public bool ParkCarLot(Car car)
         {
+            bool isParkSuccess = true;
             parkedCars.Add(car);
+            return isParkSuccess;
         }
     }
 }

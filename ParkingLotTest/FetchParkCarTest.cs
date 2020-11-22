@@ -27,8 +27,9 @@ namespace ParkingLotTest
             var parkingBoy = new ParkingBoy("b1");
             parkingBoy.AddParkingLot(parkingLot);
             var car = new Car("c1");
+            var customer = new Customer("customer1");
             //when
-            var actual = parkingBoy.ParkCarBoy(car);
+            var actual = customer.ParkCarCustomer(car, parkingBoy);
             var expectedCarId = "c1";
             var expectedBoy = "b1";
             var expectedLot = "p1";
@@ -46,12 +47,13 @@ namespace ParkingLotTest
             var parkingBoy = new ParkingBoy("b1");
             parkingBoy.AddParkingLot(parkingLot);
             var car = new Car("c1");
-            var ticket = parkingBoy.ParkCarBoy(car);
+            var customer = new Customer("customer1");
+            var ticket = customer.ParkCarCustomer(car, parkingBoy);
             //when
-            var actual = parkingBoy.FetchCarBoy(ticket);
-            var expectedCarId = "c1";
+            var actual = customer.FetchCarCustomer(ticket, parkingBoy);
+            var expected = "c1";
             //then
-            Assert.Equal(actual, expectedCarId);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -62,10 +64,12 @@ namespace ParkingLotTest
             var parkingBoy = new ParkingBoy("b1");
             parkingBoy.AddParkingLot(parkingLot);
             var car = new Car("c1");
-            var ticket = parkingBoy.ParkCarBoy(car);
-            var fetchedCar = parkingBoy.FetchCarBoy(ticket);
+            var customer = new Customer("customer1");
+
+            var ticket = customer.ParkCarCustomer(car, parkingBoy);
+            var fetchedCar = customer.FetchCarCustomer(ticket, parkingBoy);
             //when
-            var actual = parkingBoy.FetchCarBoy(ticket);
+            var actual = customer.FetchCarCustomer(ticket, parkingBoy);
             var expected = "The ticket has been used.";
             //then
             Assert.Equal(actual, expected);
@@ -81,12 +85,35 @@ namespace ParkingLotTest
             parkingBoy1.AddParkingLot(parkingLot);
             parkingBoy2.AddParkingLot(parkingLot);
             var car = new Car("c1");
-            var ticket = parkingBoy1.ParkCarBoy(car);
+            var customer = new Customer("customer1");
+            var ticket = customer.ParkCarCustomer(car, parkingBoy1);
+
             //when
-            var actual = parkingBoy2.FetchCarBoy(ticket);
+            var actual = customer.FetchCarCustomer(ticket, parkingBoy2);
             var expected = "The ticket is not provided by the parking boy.";
             //then
             Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public void Should_Return_True_When_Ticket_is_SetAsUsed()
+        {
+            //given
+            var parkingLot = new ParkingLot(10, "p1");
+            var parkingBoy = new ParkingBoy("b1");
+            parkingBoy.AddParkingLot(parkingLot);
+            var car = new Car("c1");
+            var customer = new Customer("customer1");
+            var ticket = customer.ParkCarCustomer(car, parkingBoy);
+            var newt = ticket;
+            ticket.SetTicketAsUsed();
+
+            //when
+            //var expected = "The ticket is not provided by the parking boy.";
+            //then
+            Assert.Equal(true, newt.IsUsed);
+            //customer.FetchCarCustomer(ticket, parkingBoy);
+            //Assert.Equal(true, ticket.IsUsed);
         }
     }
 }
