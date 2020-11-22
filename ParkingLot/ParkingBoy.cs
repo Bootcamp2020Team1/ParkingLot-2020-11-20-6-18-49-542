@@ -19,20 +19,20 @@ namespace ParkingLot
             boysParkingLots.Add(newParkingLot);
         }
 
-        public Ticket BoyParkCar(string carId)
+        public Ticket ParkCarBoy(string carId)
         {
             ParkingLot parkingLot = this.FindAvaibleParkingLot();
             Ticket newTicket = new Ticket(parkingLot.Id, this.Id, carId);
             return newTicket;
         }
 
-        public string BoyFetchCar(Ticket ticket)
+        public string FetchCarBoy(Ticket ticket)
         {
             if (!ticket.IsUsed)
             {
                 string ticketLotId = ticket.ParkingLotId;
                 ParkingLot rightLot = boysParkingLots.Find(parkingLot => parkingLot.Id == ticketLotId);
-                rightLot.LotFetchCar(ticket);
+                rightLot.FetchCarLot(ticket);
                 ticket.IsUsed = true;
             }
 

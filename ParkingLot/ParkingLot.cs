@@ -38,7 +38,7 @@
             manageParkingBoys.Add(newParkingBoy);
         }
 
-        public void LotFetchCar(Ticket ticket)
+        public void FetchCarLot(Ticket ticket)
         {
             if (parkedCars.Find(eachParkedCar => eachParkedCar == ticket.CarId) != null)
             {
@@ -46,7 +46,7 @@
             }
         }
 
-        public void LotParkCar(string carId)
+        public void ParkCarLot(string carId)
         {
             parkedCars.Add(carId);
         }
