@@ -19,7 +19,7 @@ namespace ParkingLotCLI
         private ParkingLot ChooseParkingLotWithMoreEmptyPositions()
         {
             var maxCapacity = ParkingLots.Max(p => p.Capacity);
-            return ParkingLots.Find(p => p.Capacity == maxCapacity);
+            return ParkingLots.Find(p => p.Capacity == maxCapacity && p.IsFull == false);
         }
     }
 }
