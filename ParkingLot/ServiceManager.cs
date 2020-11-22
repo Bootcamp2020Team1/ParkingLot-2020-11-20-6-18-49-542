@@ -22,7 +22,7 @@ namespace ParkingLotCLI
         public Ticket Park(Car car, ParkingBoy parkingBoy, out string errorMessage)
         {
             errorMessage = string.Empty;
-            if (managementList.Find(parkingBoyInList => parkingBoyInList == parkingBoy) == null)
+            if (ContainsParkingBoy(parkingBoy))
             {
                 return null;
             }
@@ -33,12 +33,17 @@ namespace ParkingLotCLI
         public Car Fetch(Ticket ticket, ParkingBoy parkingBoy, out string errorMessage)
         {
             errorMessage = string.Empty;
-            if (managementList.Find(parkingBoyInList => parkingBoyInList == parkingBoy) == null)
+            if (ContainsParkingBoy(parkingBoy))
             {
                 return null;
             }
 
             return parkingBoy.Fetch(ticket, out errorMessage);
+        }
+
+        private bool ContainsParkingBoy(ParkingBoy parkingBoy)
+        {
+            return managementList.Find(parkingBoyInList => parkingBoyInList == parkingBoy) == null;
         }
     }
 }
