@@ -50,5 +50,10 @@ namespace ParkingLot
             int validLicenseLength = 6;
             return license.Length == validLicenseLength;
         }
+
+        public double GetAvailableRate()
+        {
+            return ((double)capacity - (double)cars.Count) / (double)capacity;
+        }
     }
 }
