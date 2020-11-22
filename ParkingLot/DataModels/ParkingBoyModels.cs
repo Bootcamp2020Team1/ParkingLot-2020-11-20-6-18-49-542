@@ -8,9 +8,9 @@
             return parkingLot.AcceptCar(car);
         }
 
-        public Car Fetch(Ticket ticket, ParkingLot parkingLot)
+        public Car Fetch(string ticketNumber, ParkingLot parkingLot)
         {
-            return parkingLot.ReturnCar(ticket);
+            return parkingLot.ReturnCar(ticketNumber);
         }
     }
 

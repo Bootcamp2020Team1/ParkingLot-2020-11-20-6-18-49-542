@@ -21,7 +21,7 @@ namespace ParkingLotTest
             ParkingBoy myBoy = new SimpleParkingBoy();
             ParkingLot myLot = new ParkingLot("MyLot");
             Ticket ticket = myBoy.Park(new Car("test plate"), myLot);
-            Car car = myBoy.Fetch(ticket, myLot);
+            Car car = myBoy.Fetch(ticket.TicketNumber, myLot);
             Assert.Equal("test plate", car.Plate);
         }
     }

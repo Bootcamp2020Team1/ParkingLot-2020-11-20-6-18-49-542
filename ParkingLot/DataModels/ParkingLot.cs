@@ -7,12 +7,12 @@ namespace ParkingLot.DataModels
 {
     public class ParkingLot
     {
-        private Dictionary<Ticket, Car> parkedCars;
+        private Dictionary<string, Car> parkedCars;
         public ParkingLot(string lotName, int capacity = 10)
         {
             LotName = lotName;
             Capacity = capacity;
-            parkedCars = new Dictionary<Ticket, Car>();
+            parkedCars = new Dictionary<string, Car>();
         }
 
         public string LotName { get; }
@@ -30,14 +30,14 @@ namespace ParkingLot.DataModels
             }
 
             var ticket = new Ticket(incomingCar.Plate, LotName);
-            parkedCars.Add(ticket, incomingCar);
+            parkedCars.Add(ticket.TicketNumber, incomingCar);
             return ticket;
         }
 
-        public Car ReturnCar(Ticket ticket)
+        public Car ReturnCar(string ticketNumber)
         {
-            Car car = parkedCars[ticket];
-            parkedCars.Remove(ticket);
+            Car car = parkedCars[ticketNumber];
+            parkedCars.Remove(ticketNumber);
             return car;
         }
     }
