@@ -30,6 +30,11 @@ namespace ParkingLot
             cars.Add(license);
         }
 
+        public bool HasPosition()
+        {
+            return capacity > cars.Count;
+        }
+
         public bool IsParked(string license)
         {
             return cars.Contains(license);

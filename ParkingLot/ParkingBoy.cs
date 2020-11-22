@@ -18,7 +18,7 @@ namespace ParkingLot
         {
             if (parkingLots.Where(parkinglot => CanPark(license, parkinglot)).ToList().Count == 0)
             {
-                Console.WriteLine("Your car can not be parked");
+                Console.WriteLine("Not enough position.");
                 return null;
             }
 
@@ -44,7 +44,7 @@ namespace ParkingLot
 
         private bool CanPark(string license, ParkingLot parkingLot)
         {
-            return !parkingLot.IsParked(license) && parkingLot.IsValidLicense(license);
+            return !parkingLot.IsParked(license) && parkingLot.IsValidLicense(license) && parkingLot.HasPosition();
         }
 
         private Ticket GetTicket(ParkingLot parkingLot, string license)
