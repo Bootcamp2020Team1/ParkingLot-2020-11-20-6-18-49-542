@@ -10,7 +10,9 @@ namespace ParkingLotTest
         public void Should_park_into_parkinglot_and_return_ticket()
         {
             ParkingBoy myBoy = new SimpleParkingBoy();
+
             string errMessage = myBoy.TryPark(new Car("test plate"), new ParkingLot("MyLot"), out Ticket ticket);
+
             Assert.Equal("test plate", ticket.Plate);
             Assert.Equal("MyLot", ticket.LotName);
             Assert.Equal(string.Empty, errMessage);
@@ -21,11 +23,13 @@ namespace ParkingLotTest
         {
             ParkingBoy myBoy = new SimpleParkingBoy();
             ParkingLot myLot = new ParkingLot("MyLot");
+
             string parkErrMessage1 = myBoy.TryPark(new Car("test plate1"), myLot, out Ticket ticket1);
             string parkErrMessage2 = myBoy.TryPark(new Car("test plate2"), myLot, out Ticket ticket2);
             string parkErrMessage3 = myBoy.TryPark(new Car("test plate3"), myLot, out Ticket ticket3);
             string fetchErrMessage1 = myBoy.TryFetch(ticket1, myLot, out Car car1);
             string fetchErrMessage3 = myBoy.TryFetch(ticket3, myLot, out Car car3);
+
             Assert.Equal("test plate1", car1.Plate);
             Assert.Equal("test plate3", car3.Plate);
             Assert.Equal(string.Empty, parkErrMessage1);
@@ -40,12 +44,13 @@ namespace ParkingLotTest
         {
             ParkingBoy myBoy = new SimpleParkingBoy();
             ParkingLot myLot = new ParkingLot("MyLot");
+
             myBoy.TryPark(new Car("test plate1"), myLot, out Ticket ticket1);
             myBoy.TryPark(new Car("test plate2"), myLot, out Ticket ticket2);
             myBoy.TryPark(new Car("test plate3"), myLot, out Ticket ticket3);
-
             string fetchErrMessage1 = myBoy.TryFetch(new Ticket("wrong plate", "MyLot"), myLot, out Car car1);
-            Assert.Equal($"Your car wrong plate is NOT in {myLot.LotName}.", fetchErrMessage1);
+
+            Assert.Equal($"Unrecognized parking ticket.", fetchErrMessage1);
             Assert.Null(car1);
         }
 
@@ -54,13 +59,12 @@ namespace ParkingLotTest
         {
             ParkingBoy myBoy = new SimpleParkingBoy();
             ParkingLot myLot = new ParkingLot("MyLot");
-            myBoy.TryPark(new Car("test plate1"), myLot, out Ticket ticket1);
-            myBoy.TryPark(new Car("test plate2"), myLot, out Ticket ticket2);
-            myBoy.TryPark(new Car("test plate3"), myLot, out Ticket ticket3);
 
+            myBoy.TryPark(new Car("test plate1"), myLot, out Ticket ticket1);
             myBoy.TryFetch(ticket1, myLot, out Car car1);
             string fetchErrMessage2 = myBoy.TryFetch(ticket1, myLot, out Car car2);
-            Assert.Equal($"Your ticket {ticket1.TicketNumber} is already used.", fetchErrMessage2);
+
+            Assert.Equal($"Unrecognized parking ticket.", fetchErrMessage2);
             Assert.Null(car2);
         }
     }

@@ -1,8 +1,16 @@
 ﻿namespace ParkingLot.DataModels
 {
     using System;
-    public abstract class ParkingBoy
+    using System.Linq;
+    public class ParkingBoy
     {
+        public ParkingBoy(int id = 0)
+        {
+            this.Id = id;
+        }
+
+        public ParkingLot[] ParkingLots { get; set; }
+        public int Id { get; }
         public string TryPark(Car car, ParkingLot parkingLot, out Ticket ticket)
         {
             if (!parkingLot.IsAvailabe)
@@ -23,16 +31,10 @@
 
         public string TryFetch(Ticket ticket, ParkingLot parkingLot, out Car car)
         {
-            if (ticket.IsUsed)
+            if (ticket.IsUsed || !parkingLot.IsCarAlreadyHere(ticket.Plate))
             {
                 car = null;
-                return $"Your ticket {ticket.TicketNumber} is already used.";
-            }
-
-            if (!parkingLot.IsCarAlreadyHere(ticket.Plate))
-            {
-                car = null;
-                return $"Your car {ticket.Plate} is NOT in {parkingLot.LotName}.";
+                return $"Unrecognized parking ticket.";
             }
 
             car = parkingLot.ReturnCar(ticket.TicketNumber);
