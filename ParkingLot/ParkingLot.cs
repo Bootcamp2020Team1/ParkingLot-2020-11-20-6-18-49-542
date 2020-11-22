@@ -35,6 +35,11 @@ namespace ParkingLot
             return capacity > cars.Count;
         }
 
+        public int GetAvailablePosition()
+        {
+            return capacity - cars.Count;
+        }
+
         public bool IsParked(string license)
         {
             return cars.Contains(license);

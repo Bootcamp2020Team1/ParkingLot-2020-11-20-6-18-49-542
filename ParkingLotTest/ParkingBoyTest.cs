@@ -5,7 +5,7 @@ namespace ParkingLotTest
     using ParkingLot;
     using Xunit;
 
-    public class UnitTest1
+    public class ParkingBoyTest
     {
         [Fact]
         public void Should_Return_ticket()
