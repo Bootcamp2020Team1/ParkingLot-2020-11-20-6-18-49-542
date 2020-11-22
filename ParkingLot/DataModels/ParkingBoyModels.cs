@@ -12,7 +12,7 @@
 
         public Lot[] ParkingLots { get; set; }
         public int Id { get; }
-        public string TryPark(Car car, Lot parkingLot, out Ticket ticket)
+        public string TryParkToSpecificLot(Car car, Lot parkingLot, out Ticket ticket)
         {
             if (!parkingLot.IsAvailabe)
             {
@@ -30,7 +30,7 @@
             return string.Empty;
         }
 
-        public string TryFetch(Ticket ticket, Lot parkingLot, out Car car)
+        public string TryFetchFromSpecificLot(Ticket ticket, Lot parkingLot, out Car car)
         {
             if (ticket == null)
             {
