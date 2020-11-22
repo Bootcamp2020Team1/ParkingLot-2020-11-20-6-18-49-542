@@ -20,9 +20,13 @@ namespace ParkingLotTest
         {
             ParkingBoy myBoy = new SimpleParkingBoy();
             ParkingLot myLot = new ParkingLot("MyLot");
-            Ticket ticket = myBoy.Park(new Car("test plate"), myLot);
-            Car car = myBoy.Fetch(ticket.TicketNumber, myLot);
-            Assert.Equal("test plate", car.Plate);
+            Ticket ticket1 = myBoy.Park(new Car("test plate1"), myLot);
+            Ticket ticket2 = myBoy.Park(new Car("test plate2"), myLot);
+            Ticket ticket3 = myBoy.Park(new Car("test plate3"), myLot);
+            Car car1 = myBoy.Fetch(ticket1, myLot);
+            Car car3 = myBoy.Fetch(ticket3, myLot);
+            Assert.Equal("test plate1", car1.Plate);
+            Assert.Equal("test plate3", car3.Plate);
         }
     }
 }

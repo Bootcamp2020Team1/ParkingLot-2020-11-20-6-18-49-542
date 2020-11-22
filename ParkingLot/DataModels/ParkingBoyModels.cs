@@ -5,12 +5,22 @@
     {
         public Ticket Park(Car car, ParkingLot parkingLot)
         {
+            if (!parkingLot.IsAvailabe || parkingLot.IsCarAlreadyHere(car.Plate))
+            {
+                return null;
+            }
+
             return parkingLot.AcceptCar(car);
         }
 
-        public Car Fetch(string ticketNumber, ParkingLot parkingLot)
+        public Car Fetch(Ticket ticket, ParkingLot parkingLot)
         {
-            return parkingLot.ReturnCar(ticketNumber);
+            if (!parkingLot.IsCarAlreadyHere(ticket.Plate))
+            {
+                return null;
+            }
+
+            return parkingLot.ReturnCar(ticket.TicketNumber);
         }
     }
 

@@ -20,15 +20,10 @@ namespace ParkingLot.DataModels
         public int AvailablePositions => Capacity - parkedCars.Keys.Count;
         public bool IsAvailabe => AvailablePositions > 0;
 
-        public bool IsCarAlreadyHere(Car car) => parkedCars.Values.Select(x => x.Plate).Contains(car.Plate);
+        public bool IsCarAlreadyHere(string plate) => parkedCars.Values.Select(x => x.Plate).Contains(plate);
 
         public Ticket AcceptCar(Car incomingCar)
         {
-            if (!this.IsAvailabe || IsCarAlreadyHere(incomingCar))
-            {
-                return null;
-            }
-
             var ticket = new Ticket(incomingCar.Plate, LotName);
             parkedCars.Add(ticket.TicketNumber, incomingCar);
             return ticket;
