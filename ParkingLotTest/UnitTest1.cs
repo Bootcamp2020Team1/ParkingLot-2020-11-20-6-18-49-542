@@ -62,5 +62,21 @@ namespace ParkingLotTest
 
             Assert.Equal("Unrecognized parking ticket.", returnMessage);
         }
+
+        [Fact]
+        public void Should_Return_ticket_Normal_Parking_Boy()
+        {
+            var parkingLot1 = new ParkingLot(1, 1);
+            var parkingLot2 = new ParkingLot(4, 2);
+            var parkingLotList = new List<ParkingLot>();
+            parkingLotList.Add(parkingLot1);
+            parkingLotList.Add(parkingLot2);
+            var parkingBoy = new NormalParkingBoy(parkingLotList);
+            var ticket0 = parkingBoy.ParkACarAndGetTicket("abc123");
+            var ticket = parkingBoy.ParkACarAndGetTicket("abc123");
+            var expectedTicket = new Ticket("abc123", 2);
+
+            Assert.Equal(expectedTicket.GetParkingLotNumber(), ticket.GetParkingLotNumber());
+        }
     }
 }

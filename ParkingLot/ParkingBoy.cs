@@ -16,15 +16,15 @@ namespace ParkingLot
 
         public Ticket ParkACarAndGetTicket(string license)
         {
-            if (parkingLots.Where(parkinglot => CanPark(license, parkinglot)).ToList().Count == 0)
+            var selectedParkingLotList = parkingLots.Where(parkinglot => CanPark(license, parkinglot)).ToList();
+            if (selectedParkingLotList.Count == 0)
             {
                 Console.WriteLine("Not enough position.");
                 return null;
             }
 
-            var selectedParkingLot = parkingLots.Where(parkinglot => CanPark(license, parkinglot)).ToList()[0];
-            selectedParkingLot.ParkACar(license);
-            return GetTicket(selectedParkingLot, license);
+            selectedParkingLotList[0].ParkACar(license);
+            return GetTicket(selectedParkingLotList[0], license);
         }
 
         public string FetchACarWithTicket(Ticket ticket)
@@ -42,12 +42,12 @@ namespace ParkingLot
             return $"Your car {ticket.GetLicense()} in parking lot number {parkingLot.GetParkingLotNumber()} is fetched";
         }
 
-        private bool CanPark(string license, ParkingLot parkingLot)
+        protected bool CanPark(string license, ParkingLot parkingLot)
         {
             return !parkingLot.IsParked(license) && parkingLot.IsValidLicense(license) && parkingLot.HasPosition();
         }
 
-        private Ticket GetTicket(ParkingLot parkingLot, string license)
+        protected Ticket GetTicket(ParkingLot parkingLot, string license)
         {
             return new Ticket(license, parkingLot.GetParkingLotNumber());
         }
