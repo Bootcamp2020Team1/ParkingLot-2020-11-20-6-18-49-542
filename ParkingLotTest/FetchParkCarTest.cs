@@ -36,5 +36,19 @@ namespace ParkingLotTest
             Assert.Equal(actual.ParkingBoyId, expectedBoy);
             Assert.Equal(actual.ParkingLotId, expectedLot);
         }
+
+        public void Should_Return_CarId_When_Fetch_Car()
+        {
+            //given
+            var parkingLot = new ParkingLot(10, "p1");
+            var parkingBoy = new ParkingBoy("b1");
+            parkingBoy.AddParkingLot(parkingLot);
+            var ticket = parkingBoy.ParkCarBoy("c1");
+            //when
+            var actual = parkingBoy.FetchCarBoy(ticket);
+            var expectedCarId = "c1";
+            //then
+            Assert.Equal(actual, expectedCarId);
+        }
     }
 }

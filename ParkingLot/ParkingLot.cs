@@ -38,12 +38,15 @@
             manageParkingBoys.Add(newParkingBoy);
         }
 
-        public void FetchCarLot(Ticket ticket)
+        public string FetchCarLot(Ticket ticket)
         {
-            if (parkedCars.Find(eachParkedCar => eachParkedCar == ticket.CarId) != null)
+            string carFound = parkedCars.Find(eachParkedCar => eachParkedCar == ticket.CarId);
+            if (carFound != null)
             {
                 parkedCars.Remove(ticket.CarId);
             }
+
+            return carFound;
         }
 
         public void ParkCarLot(string carId)
