@@ -32,5 +32,18 @@ namespace ParkingLotTest
 
             Assert.Equal("Your car can not be parked", ticket);
         }
+
+        [Fact]
+        public void Should_Fetch_Car_And_Return_Message()
+        {
+            var parkingLot = new ParkingLot(4, 1);
+            var parkingLotList = new List<ParkingLot>();
+            parkingLotList.Add(parkingLot);
+            var parkingBoy = new ParkingBoy(parkingLotList);
+            var ticket = parkingBoy.ParkACarAndGetTicket("abc123");
+            var returnMessage = parkingBoy.FetchACarWithTicket("abc123", 1);
+
+            Assert.Equal("Your car abc123 in parking lot number 1 is fetched", returnMessage);
+        }
     }
 }

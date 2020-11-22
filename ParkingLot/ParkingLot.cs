@@ -20,6 +20,11 @@ namespace ParkingLot
             return parkingLotNumber;
         }
 
+        public void RemoveACar(string license)
+        {
+            cars.Remove(license);
+        }
+
         public void ParkACar(string license)
         {
             cars.Add(license);

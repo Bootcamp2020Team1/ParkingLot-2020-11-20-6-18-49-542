@@ -26,6 +26,19 @@ namespace ParkingLot
             return ticket;
         }
 
+        public string FetchACarWithTicket(string license, int parkingLotNumber)
+        {
+            if (parkingLots.Where(parkingLot => parkingLot.GetParkingLotNumber().Equals(parkingLotNumber)).ToList()
+                .Count == 0)
+            {
+                return "Your parking lot is not available";
+            }
+
+            var parkingLot = parkingLots.Where(parkingLot => parkingLot.GetParkingLotNumber().Equals(parkingLotNumber)).ToList()[0];
+            parkingLot.RemoveACar(license);
+            return $"Your car {license} in parking lot number {parkingLot.GetParkingLotNumber()} is fetched";
+        }
+
         private bool CanPark(string license, ParkingLot parkingLot)
         {
             return !parkingLot.IsParked(license) && parkingLot.IsValidLicense(license);
