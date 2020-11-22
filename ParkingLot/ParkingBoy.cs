@@ -28,17 +28,20 @@ namespace ParkingLot
 
         public string FetchCarBoy(Ticket ticket)
         {
-            if (!ticket.IsUsed)
-            {
-                string ticketLotId = ticket.ParkingLotId;
-                ParkingLot rightLot = boysParkingLots.Find(parkingLot => parkingLot.Id == ticketLotId);
-                rightLot.FetchCarLot(ticket);
-                ticket.IsUsed = true;
-            }
-            else
+            if (ticket.IsUsed)
             {
                 return "The ticket has been used.";
             }
+
+            if (ticket.ParkingBoyId != this.Id)
+            {
+                return "The ticket is not provided by the parking boy.";
+            }
+
+            string ticketLotId = ticket.ParkingLotId;
+            ParkingLot rightLot = boysParkingLots.Find(parkingLot => parkingLot.Id == ticketLotId);
+            rightLot.FetchCarLot(ticket);
+            ticket.IsUsed = true;
 
             return ticket.CarId;
         }
