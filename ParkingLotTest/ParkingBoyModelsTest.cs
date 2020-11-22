@@ -40,6 +40,21 @@ namespace ParkingLotTest
         }
 
         [Fact]
+        public void Should_return_error_when_parkinglot_is_full()
+        {
+            ParkingBoy myBoy = new SimpleParkingBoy();
+            ParkingLot myLot = new ParkingLot("MyLot", 1);
+
+            myBoy.TryPark(new Car("test plate1"), myLot, out Ticket ticket1);
+            string errMessage = myBoy.TryPark(new Car("test plate2"), myLot, out Ticket ticket2);
+
+            Assert.Equal("test plate1", ticket1.Plate);
+            Assert.Equal("MyLot", ticket1.LotName);
+            Assert.Equal("Not enough positions.", errMessage);
+            Assert.Null(ticket2);
+        }
+
+        [Fact]
         public void Should_return_error_message_with_wrong_ticket()
         {
             ParkingBoy myBoy = new SimpleParkingBoy();

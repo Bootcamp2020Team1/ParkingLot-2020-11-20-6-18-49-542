@@ -16,7 +16,7 @@
             if (!parkingLot.IsAvailabe)
             {
                 ticket = null;
-                return $"ParkingLot {parkingLot.LotName} is full.";
+                return $"Not enough positions.";
             }
 
             if (parkingLot.IsCarAlreadyHere(car.Plate))
