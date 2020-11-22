@@ -406,6 +406,23 @@ namespace ParkingLotTest
         }
 
         [Fact]
+        public void Should_Manager_Display_Error_Message_When_Specify_A_Parking_Boy_To_Fetch_Car_Given_Wrong_Ticket()
+        {
+            //given
+            var id = Guid.NewGuid();
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot(id, 10) });
+            var serviceManager = new ServiceManager(new List<ParkingLot>() { new ParkingLot() });
+            serviceManager.AddParkingBoy(parkingBoy);
+
+            //when
+            var errorMessage = string.Empty;
+            serviceManager.Fetch(new Ticket(id.ToString(), "ticket"), parkingBoy, out errorMessage);
+
+            //then
+            Assert.Equal("Unrecognized parking ticket.", errorMessage);
+        }
+
+        [Fact]
         public void Should_Manager_Display_Error_Message_When_Specify_A_Parking_Boy_To_Park_Car_Given_Used_Ticket()
         {
             //given
