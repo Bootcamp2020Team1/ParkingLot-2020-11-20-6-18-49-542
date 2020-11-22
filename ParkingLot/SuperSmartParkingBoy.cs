@@ -19,7 +19,7 @@ namespace ParkingLotCLI
         private ParkingLot ChooseParkingLotWithLargerAvailablePositionRate()
         {
             var maxAvailablePositionRate = ParkingLots.Max(p => GetAvailablePositionRate(p));
-            return ParkingLots.Find(p => GetAvailablePositionRate(p) == maxAvailablePositionRate);
+            return ParkingLots.Find(p => GetAvailablePositionRate(p) == maxAvailablePositionRate && p.IsFull == false);
         }
 
         private double GetAvailablePositionRate(ParkingLot parkingLot)
