@@ -5,7 +5,12 @@
     {
         public Ticket Park(Car car, ParkingLot parkingLot)
         {
-            return new Ticket(car.Plate, parkingLot.LotName);
+            return parkingLot.AcceptCar(car);
+        }
+
+        public Car Fetch(Ticket ticket, ParkingLot parkingLot)
+        {
+            return parkingLot.ReturnCar(ticket);
         }
     }
 

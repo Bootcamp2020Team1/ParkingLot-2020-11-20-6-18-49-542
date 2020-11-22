@@ -34,9 +34,11 @@ namespace ParkingLot.DataModels
             return ticket;
         }
 
-        //public Car ReturnCar(Ticket ticket)
-        //{
-
-        //}
+        public Car ReturnCar(Ticket ticket)
+        {
+            Car car = parkedCars[ticket];
+            parkedCars.Remove(ticket);
+            return car;
+        }
     }
 }

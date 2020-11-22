@@ -11,15 +11,18 @@ namespace ParkingLotTest
         {
             ParkingBoy myBoy = new SimpleParkingBoy();
             Ticket ticket = myBoy.Park(new Car("test plate"), new ParkingLot("MyLot"));
-            Assert.NotNull(ticket);
+            Assert.Equal("test plate", ticket.Plate);
+            Assert.Equal("MyLot", ticket.LotName);
         }
 
         [Fact]
         public void Should_fetch_corresponding_car_with_ticket()
         {
             ParkingBoy myBoy = new SimpleParkingBoy();
-            Ticket ticket = myBoy.Park(new Car("test plate"), new ParkingLot("MyLot"));
-            Assert.NotNull(ticket);
+            ParkingLot myLot = new ParkingLot("MyLot");
+            Ticket ticket = myBoy.Park(new Car("test plate"), myLot);
+            Car car = myBoy.Fetch(ticket, myLot);
+            Assert.Equal("test plate", car.Plate);
         }
     }
 }
