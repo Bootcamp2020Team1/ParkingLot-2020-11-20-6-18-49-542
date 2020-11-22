@@ -37,6 +37,7 @@ namespace ParkingLotTest
             Assert.Equal(actual.ParkingLotId, expectedLot);
         }
 
+        [Fact]
         public void Should_Return_CarId_When_Fetch_Car()
         {
             //given
