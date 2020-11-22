@@ -4,14 +4,15 @@
     using System.Linq;
     public class ParkingBoy
     {
-        public ParkingBoy(int id = 0)
+        public ParkingBoy(Lot[] parkingLots, int id = 0)
         {
             this.Id = id;
+            this.ParkingLots = parkingLots;
         }
 
-        public ParkingLot[] ParkingLots { get; set; }
+        public Lot[] ParkingLots { get; set; }
         public int Id { get; }
-        public string TryPark(Car car, ParkingLot parkingLot, out Ticket ticket)
+        public string TryPark(Car car, Lot parkingLot, out Ticket ticket)
         {
             if (!parkingLot.IsAvailabe)
             {
@@ -29,7 +30,7 @@
             return string.Empty;
         }
 
-        public string TryFetch(Ticket ticket, ParkingLot parkingLot, out Car car)
+        public string TryFetch(Ticket ticket, Lot parkingLot, out Car car)
         {
             if (ticket == null)
             {
@@ -47,17 +48,5 @@
             ticket.IsUsed = true;
             return string.Empty;
         }
-    }
-
-    public class SimpleParkingBoy : ParkingBoy
-    {
-    }
-
-    public class SmartParkingBoy : ParkingBoy
-    {
-    }
-
-    public class SuperSmartParkingBoy : ParkingBoy
-    {
     }
 }

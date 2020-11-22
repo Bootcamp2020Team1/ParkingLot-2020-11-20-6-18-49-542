@@ -2,6 +2,7 @@ namespace ParkingLotTest
 {
     using ParkingLot;
     using ParkingLot.DataModels;
+    using Utils;
     using Xunit;
 
     public class ParkingBoyModelsTest
@@ -9,9 +10,9 @@ namespace ParkingLotTest
         [Fact]
         public void Should_park_into_parkinglot_and_return_ticket()
         {
-            ParkingBoy myBoy = new SimpleParkingBoy();
+            ParkingBoy myBoy = new ParkingBoy(DataLoader.GetParkingLots());
 
-            string errMessage = myBoy.TryPark(new Car("test plate"), new ParkingLot("MyLot"), out Ticket ticket);
+            string errMessage = myBoy.TryPark(new Car("test plate"), new Lot("MyLot"), out Ticket ticket);
 
             Assert.Equal("test plate", ticket.Plate);
             Assert.Equal("MyLot", ticket.LotName);
@@ -21,8 +22,8 @@ namespace ParkingLotTest
         [Fact]
         public void Should_fetch_corresponding_car_with_ticket()
         {
-            ParkingBoy myBoy = new SimpleParkingBoy();
-            ParkingLot myLot = new ParkingLot("MyLot");
+            ParkingBoy myBoy = new ParkingBoy(DataLoader.GetParkingLots());
+            Lot myLot = new Lot("MyLot");
 
             string parkErrMessage1 = myBoy.TryPark(new Car("test plate1"), myLot, out Ticket ticket1);
             string parkErrMessage2 = myBoy.TryPark(new Car("test plate2"), myLot, out Ticket ticket2);
@@ -42,8 +43,8 @@ namespace ParkingLotTest
         [Fact]
         public void Should_return_error_when_parkinglot_is_full()
         {
-            ParkingBoy myBoy = new SimpleParkingBoy();
-            ParkingLot myLot = new ParkingLot("MyLot", 1);
+            ParkingBoy myBoy = new ParkingBoy(DataLoader.GetParkingLots());
+            Lot myLot = new Lot("MyLot", 1);
 
             myBoy.TryPark(new Car("test plate1"), myLot, out Ticket ticket1);
             string errMessage = myBoy.TryPark(new Car("test plate2"), myLot, out Ticket ticket2);
@@ -57,8 +58,8 @@ namespace ParkingLotTest
         [Fact]
         public void Should_return_error_message_with_wrong_ticket()
         {
-            ParkingBoy myBoy = new SimpleParkingBoy();
-            ParkingLot myLot = new ParkingLot("MyLot");
+            ParkingBoy myBoy = new ParkingBoy(DataLoader.GetParkingLots());
+            Lot myLot = new Lot("MyLot");
 
             myBoy.TryPark(new Car("test plate1"), myLot, out Ticket ticket1);
             myBoy.TryPark(new Car("test plate2"), myLot, out Ticket ticket2);
@@ -75,8 +76,8 @@ namespace ParkingLotTest
         [Fact]
         public void Should_return_used_with_used_ticket()
         {
-            ParkingBoy myBoy = new SimpleParkingBoy();
-            ParkingLot myLot = new ParkingLot("MyLot");
+            ParkingBoy myBoy = new ParkingBoy(DataLoader.GetParkingLots());
+            Lot myLot = new Lot("MyLot");
 
             myBoy.TryPark(new Car("test plate1"), myLot, out Ticket ticket1);
             myBoy.TryFetch(ticket1, myLot, out Car car1);
