@@ -16,6 +16,7 @@ namespace ParkingLot.DataModels
         public string TicketNumber { get; }
         public string Plate { get; }
         public string LotName { get; }
+        public bool IsUsed { get; set; }
 
         public override string ToString()
         {

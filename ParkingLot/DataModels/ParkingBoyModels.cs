@@ -3,24 +3,34 @@
     using System;
     public abstract class ParkingBoy
     {
-        public Ticket Park(Car car, ParkingLot parkingLot)
+        public string TryPark(Car car, ParkingLot parkingLot, out Ticket ticket)
         {
-            if (!parkingLot.IsAvailabe || parkingLot.IsCarAlreadyHere(car.Plate))
+            if (!parkingLot.IsAvailabe)
             {
-                return null;
+                ticket = null;
+                return $"ParkingLot {parkingLot.LotName} is full.";
             }
 
-            return parkingLot.AcceptCar(car);
+            if (parkingLot.IsCarAlreadyHere(car.Plate))
+            {
+                ticket = null;
+                return $"Your car {car.Plate} is already in {parkingLot.LotName}.";
+            }
+
+            ticket = parkingLot.AcceptCar(car);
+            return string.Empty;
         }
 
-        public Car Fetch(Ticket ticket, ParkingLot parkingLot)
+        public string TryFetch(Ticket ticket, ParkingLot parkingLot, out Car car)
         {
             if (!parkingLot.IsCarAlreadyHere(ticket.Plate))
             {
-                return null;
+                car = null;
+                return $"Your car {ticket.Plate} is NOT in {parkingLot.LotName}.";
             }
 
-            return parkingLot.ReturnCar(ticket.TicketNumber);
+            car = parkingLot.ReturnCar(ticket.TicketNumber);
+            return string.Empty;
         }
     }
 
