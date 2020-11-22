@@ -219,5 +219,33 @@ namespace ParkingLotTest
             //then
             Assert.Equal(id_2.ToString(), ticket2.ParkingLotID);
         }
+
+        [Fact]
+        public void Should_Return_Null_Tickt_When_Park_The_Parked_Car()
+        {
+            //given
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
+            var car = new Car("car1");
+            parkingBoy.Park(car, out _);
+
+            //when
+            var ticket = parkingBoy.Park(car, out _);
+
+            //then
+            Assert.Null(ticket);
+        }
+
+        [Fact]
+        public void Should_Return_Null_Tickt_When_Park_The_Null_Car()
+        {
+            //given
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { new ParkingLot() });
+
+            //when
+            var ticket = parkingBoy.Park(null, out _);
+
+            //then
+            Assert.Null(ticket);
+        }
     }
 }
