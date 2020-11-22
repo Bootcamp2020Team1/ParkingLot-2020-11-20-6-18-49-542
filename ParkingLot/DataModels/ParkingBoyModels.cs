@@ -23,6 +23,12 @@
 
         public string TryFetch(Ticket ticket, ParkingLot parkingLot, out Car car)
         {
+            if (ticket.IsUsed)
+            {
+                car = null;
+                return $"Your ticket {ticket.TicketNumber} is already used.";
+            }
+
             if (!parkingLot.IsCarAlreadyHere(ticket.Plate))
             {
                 car = null;
@@ -30,6 +36,7 @@
             }
 
             car = parkingLot.ReturnCar(ticket.TicketNumber);
+            ticket.IsUsed = true;
             return string.Empty;
         }
     }

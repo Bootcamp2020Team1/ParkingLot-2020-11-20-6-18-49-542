@@ -48,5 +48,20 @@ namespace ParkingLotTest
             Assert.Equal($"Your car wrong plate is NOT in {myLot.LotName}.", fetchErrMessage1);
             Assert.Null(car1);
         }
+
+        [Fact]
+        public void Should_return_used_with_used_ticket()
+        {
+            ParkingBoy myBoy = new SimpleParkingBoy();
+            ParkingLot myLot = new ParkingLot("MyLot");
+            myBoy.TryPark(new Car("test plate1"), myLot, out Ticket ticket1);
+            myBoy.TryPark(new Car("test plate2"), myLot, out Ticket ticket2);
+            myBoy.TryPark(new Car("test plate3"), myLot, out Ticket ticket3);
+
+            myBoy.TryFetch(ticket1, myLot, out Car car1);
+            string fetchErrMessage2 = myBoy.TryFetch(ticket1, myLot, out Car car2);
+            Assert.Equal($"Your ticket {ticket1.TicketNumber} is already used.", fetchErrMessage2);
+            Assert.Null(car2);
+        }
     }
 }
