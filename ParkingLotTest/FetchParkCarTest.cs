@@ -51,5 +51,21 @@ namespace ParkingLotTest
             //then
             Assert.Equal(actual, expectedCarId);
         }
+
+        [Fact]
+        public void Should_Return_False_When_Fetch_Car_With_Ticket_ParkingBoy_not_provided()
+        {
+            //given
+            var parkingLot = new ParkingLot(10, "p1");
+            var parkingBoy = new ParkingBoy("b1");
+            parkingBoy.AddParkingLot(parkingLot);
+            var ticket = parkingBoy.ParkCarBoy("c1");
+            var fetchedCar = parkingBoy.FetchCarBoy(ticket);
+            //when
+            var actual = parkingBoy.FetchCarBoy(ticket);
+            var expectedCarId = "The ticket has been used.";
+            //then
+            Assert.Equal(actual, expectedCarId);
+        }
     }
 }

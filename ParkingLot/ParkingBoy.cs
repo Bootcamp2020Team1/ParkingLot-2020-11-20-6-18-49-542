@@ -35,6 +35,10 @@ namespace ParkingLot
                 rightLot.FetchCarLot(ticket);
                 ticket.IsUsed = true;
             }
+            else
+            {
+                return "The ticket has been used.";
+            }
 
             return ticket.CarId;
         }
