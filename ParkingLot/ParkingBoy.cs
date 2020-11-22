@@ -16,6 +16,11 @@ namespace ParkingLot
 
         public string ParkACarAndGetTicket(string license)
         {
+            if (parkingLots.Where(parkinglot => CanPark(license, parkinglot)).ToList().Count == 0)
+            {
+                return "Your car can not be parked";
+            }
+
             var selectedParkingLot = parkingLots.Where(parkinglot => CanPark(license, parkinglot)).ToList()[0];
             string ticket = GetTicket(selectedParkingLot, license);
             return ticket;
