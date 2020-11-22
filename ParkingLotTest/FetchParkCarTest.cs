@@ -115,5 +115,28 @@ namespace ParkingLotTest
             //customer.FetchCarCustomer(ticket, parkingBoy);
             //Assert.Equal(true, ticket.IsUsed);
         }
+
+        [Fact]
+        public void Should_Park_To_ParkingLot_With_More_LeftPosition()
+        {
+            //given
+            var parkingLot1 = new ParkingLot(6, "p1");
+            var parkingLot2 = new ParkingLot(10, "p2");
+            var parkingBoy = new SmartParkingBoy("b1");
+            parkingBoy.AddParkingLot(parkingLot1);
+            parkingBoy.AddParkingLot(parkingLot2);
+            var car = new Car("c1");
+            var customer = new Customer("customer1");
+            var ticket = customer.ParkCarCustomer(car, parkingBoy);
+            //when
+            var actual1 = parkingLot1.LeftPosition;
+            var actual2 = parkingLot2.LeftPosition;
+            var expected = 9;
+            //then
+            //Assert.Equal(expected, actual1);
+            Assert.Equal(9, actual2);
+            //customer.FetchCarCustomer(ticket, parkingBoy);
+            //Assert.Equal(true, ticket.IsUsed);
+        }
     }
 }

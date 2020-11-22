@@ -15,9 +15,11 @@ namespace ParkingLot
 
         public string Id { get; set; }
 
+        public List<ParkingLot> BoysParkingLots => boysParkingLots;
+
         public void AddParkingLot(ParkingLot newParkingLot)
         {
-            boysParkingLots.Add(newParkingLot);
+            this.boysParkingLots.Add(newParkingLot);
         }
 
         public Ticket ParkCarBoy(Car car, string customerId)
@@ -25,7 +27,7 @@ namespace ParkingLot
             Ticket newTicket = null;
             if (car != null && car.IsParked == false)
             {
-                ParkingLot parkingLot = this.FindAvaibleParkingLot();
+                ParkingLot parkingLot = FindAvaibleParkingLot();
                 bool isParkSuccess = parkingLot.ParkCarLot(car);
                 if (isParkSuccess)
                 {
@@ -55,7 +57,7 @@ namespace ParkingLot
             return carFound.Id;
         }
 
-        public ParkingLot FindAvaibleParkingLot()
+        public virtual ParkingLot FindAvaibleParkingLot()
         {
             ParkingLot availableLot = null;
             bool canContinue = true;
@@ -69,11 +71,6 @@ namespace ParkingLot
             }
 
             return availableLot;
-        }
-
-        public List<ParkingLot> GetBoysParkingLots()
-        {
-            return boysParkingLots;
         }
     }
 }
