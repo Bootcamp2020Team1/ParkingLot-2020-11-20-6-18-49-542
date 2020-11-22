@@ -42,9 +42,25 @@ namespace ParkingLotTest
             parkingLotList.Add(parkingLot);
             var parkingBoy = new ParkingBoy(parkingLotList);
             var ticket = parkingBoy.ParkACarAndGetTicket("abc123");
-            var returnMessage = parkingBoy.FetchACarWithTicket("abc123", 1);
+            var returnMessage = parkingBoy.FetchACarWithTicket(ticket);
 
             Assert.Equal("Your car abc123 in parking lot number 1 is fetched", returnMessage);
+        }
+
+        [Theory]
+        [InlineData("abc123", 1)]
+        [InlineData("abc123", 1)]
+        public void Should_Not_Fetch_Car_And_Return_Error_Message(string license, int parkingLotNumber)
+        {
+            var parkingLot = new ParkingLot(4, 1);
+            var parkingLotList = new List<ParkingLot>();
+            parkingLotList.Add(parkingLot);
+            var parkingBoy = new ParkingBoy(parkingLotList);
+            var ticket = parkingBoy.ParkACarAndGetTicket("abc123");
+            parkingBoy.FetchACarWithTicket(new Ticket(license, parkingLotNumber));
+            var returnMessage = parkingBoy.FetchACarWithTicket(new Ticket(license, parkingLotNumber));
+
+            Assert.Equal("Unrecognized parking ticket.", returnMessage);
         }
     }
 }
