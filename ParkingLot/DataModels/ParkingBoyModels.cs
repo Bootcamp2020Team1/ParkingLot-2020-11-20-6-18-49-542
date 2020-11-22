@@ -16,7 +16,7 @@
             if (!parkingLot.IsAvailabe)
             {
                 ticket = null;
-                return $"Not enough positions.";
+                return "Not enough positions.";
             }
 
             if (parkingLot.IsCarAlreadyHere(car.Plate))
@@ -31,10 +31,16 @@
 
         public string TryFetch(Ticket ticket, ParkingLot parkingLot, out Car car)
         {
+            if (ticket == null)
+            {
+                car = null;
+                return "Please provide your parking ticket.";
+            }
+
             if (ticket.IsUsed || !parkingLot.IsCarAlreadyHere(ticket.Plate))
             {
                 car = null;
-                return $"Unrecognized parking ticket.";
+                return "Unrecognized parking ticket.";
             }
 
             car = parkingLot.ReturnCar(ticket.TicketNumber);

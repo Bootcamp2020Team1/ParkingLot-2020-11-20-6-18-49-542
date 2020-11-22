@@ -64,9 +64,12 @@ namespace ParkingLotTest
             myBoy.TryPark(new Car("test plate2"), myLot, out Ticket ticket2);
             myBoy.TryPark(new Car("test plate3"), myLot, out Ticket ticket3);
             string fetchErrMessage1 = myBoy.TryFetch(new Ticket("wrong plate", "MyLot"), myLot, out Car car1);
+            string fetchErrMessage2 = myBoy.TryFetch(null, myLot, out Car car2);
 
-            Assert.Equal($"Unrecognized parking ticket.", fetchErrMessage1);
+            Assert.Equal("Unrecognized parking ticket.", fetchErrMessage1);
             Assert.Null(car1);
+            Assert.Equal("Please provide your parking ticket.", fetchErrMessage2);
+            Assert.Null(car2);
         }
 
         [Fact]
@@ -79,7 +82,7 @@ namespace ParkingLotTest
             myBoy.TryFetch(ticket1, myLot, out Car car1);
             string fetchErrMessage2 = myBoy.TryFetch(ticket1, myLot, out Car car2);
 
-            Assert.Equal($"Unrecognized parking ticket.", fetchErrMessage2);
+            Assert.Equal("Unrecognized parking ticket.", fetchErrMessage2);
             Assert.Null(car2);
         }
     }
