@@ -5,7 +5,7 @@
     {
         public Ticket Park(Car car, ParkingLot parkingLot)
         {
-            return new Ticket();
+            return new Ticket(car.Plate, parkingLot.LotName);
         }
     }
 
