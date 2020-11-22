@@ -19,10 +19,16 @@ namespace ParkingLot
             boysParkingLots.Add(newParkingLot);
         }
 
-        public Ticket ParkCarBoy(string carId)
+        public Ticket ParkCarBoy(Car car)
         {
-            ParkingLot parkingLot = this.FindAvaibleParkingLot();
-            Ticket newTicket = new Ticket(parkingLot.Id, this.Id, carId);
+            Ticket newTicket = null;
+            if (car != null && car.IsParked == false)
+            {
+                ParkingLot parkingLot = this.FindAvaibleParkingLot();
+                newTicket = new Ticket(parkingLot.Id, this.Id, car.Id);
+                car.IsParked = true;
+            }
+
             return newTicket;
         }
 

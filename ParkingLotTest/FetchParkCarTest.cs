@@ -26,8 +26,9 @@ namespace ParkingLotTest
             var parkingLot = new ParkingLot(10, "p1");
             var parkingBoy = new ParkingBoy("b1");
             parkingBoy.AddParkingLot(parkingLot);
+            var car = new Car("c1");
             //when
-            var actual = parkingBoy.ParkCarBoy("c1");
+            var actual = parkingBoy.ParkCarBoy(car);
             var expectedCarId = "c1";
             var expectedBoy = "b1";
             var expectedLot = "p1";
@@ -44,7 +45,8 @@ namespace ParkingLotTest
             var parkingLot = new ParkingLot(10, "p1");
             var parkingBoy = new ParkingBoy("b1");
             parkingBoy.AddParkingLot(parkingLot);
-            var ticket = parkingBoy.ParkCarBoy("c1");
+            var car = new Car("c1");
+            var ticket = parkingBoy.ParkCarBoy(car);
             //when
             var actual = parkingBoy.FetchCarBoy(ticket);
             var expectedCarId = "c1";
@@ -59,7 +61,8 @@ namespace ParkingLotTest
             var parkingLot = new ParkingLot(10, "p1");
             var parkingBoy = new ParkingBoy("b1");
             parkingBoy.AddParkingLot(parkingLot);
-            var ticket = parkingBoy.ParkCarBoy("c1");
+            var car = new Car("c1");
+            var ticket = parkingBoy.ParkCarBoy(car);
             var fetchedCar = parkingBoy.FetchCarBoy(ticket);
             //when
             var actual = parkingBoy.FetchCarBoy(ticket);
@@ -77,7 +80,8 @@ namespace ParkingLotTest
             var parkingBoy2 = new ParkingBoy("b2");
             parkingBoy1.AddParkingLot(parkingLot);
             parkingBoy2.AddParkingLot(parkingLot);
-            var ticket = parkingBoy1.ParkCarBoy("c1");
+            var car = new Car("c1");
+            var ticket = parkingBoy1.ParkCarBoy(car);
             //when
             var actual = parkingBoy2.FetchCarBoy(ticket);
             var expected = "The ticket is not provided by the parking boy.";

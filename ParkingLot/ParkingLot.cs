@@ -6,7 +6,7 @@
     public class ParkingLot
     {
         private List<ParkingBoy> manageParkingBoys = new List<ParkingBoy>();
-        private List<string> parkedCars = new List<string>();
+        private List<Car> parkedCars = new List<Car>();
 
         public ParkingLot(int capacity, string parkingLotId)
         {
@@ -38,20 +38,20 @@
             manageParkingBoys.Add(newParkingBoy);
         }
 
-        public string FetchCarLot(Ticket ticket)
+        public Car FetchCarLot(Ticket ticket)
         {
-            string carFound = parkedCars.Find(eachParkedCar => eachParkedCar == ticket.CarId);
+            Car carFound = parkedCars.Find(eachParkedCar => eachParkedCar.Id == ticket.CarId);
             if (carFound != null)
             {
-                parkedCars.Remove(ticket.CarId);
+                parkedCars.RemoveAll(eachParkedCar => eachParkedCar.Id == ticket.CarId);
             }
 
             return carFound;
         }
 
-        public void ParkCarLot(string carId)
+        public void ParkCarLot(Car car)
         {
-            parkedCars.Add(carId);
+            parkedCars.Add(car);
         }
     }
 }
