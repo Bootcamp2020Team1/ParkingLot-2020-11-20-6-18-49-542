@@ -16,13 +16,18 @@ namespace ParkingLotCLI
 
         public void AddParkingBoy(ParkingBoy parkingBoy)
         {
-            managementList.Add(parkingBoy);
+            if (parkingBoy.IdOfParkingLots.Count == 0)
+            {
+                parkingBoy.AddParkingLots(ParkingLots);
+                managementList.Add(parkingBoy);
+            }
         }
 
-        public Ticket Park(Car car, ParkingBoy parkingBoy, out string errorMessage)
+        public Ticket SpecifyParkingBoyToPark(Car car, out string errorMessage)
         {
             errorMessage = string.Empty;
-            if (ContainsParkingBoy(parkingBoy))
+            var parkingBoy = ChooseBoy();
+            if (parkingBoy == null)
             {
                 return null;
             }
@@ -30,10 +35,11 @@ namespace ParkingLotCLI
             return parkingBoy.Park(car, out errorMessage);
         }
 
-        public Car Fetch(Ticket ticket, ParkingBoy parkingBoy, out string errorMessage)
+        public Car SpecifyParkingBoyToFetch(Ticket ticket, out string errorMessage)
         {
             errorMessage = string.Empty;
-            if (ContainsParkingBoy(parkingBoy))
+            var parkingBoy = ChooseBoy();
+            if (parkingBoy == null)
             {
                 return null;
             }
@@ -41,9 +47,16 @@ namespace ParkingLotCLI
             return parkingBoy.Fetch(ticket, out errorMessage);
         }
 
-        private bool ContainsParkingBoy(ParkingBoy parkingBoy)
+        private ParkingBoy ChooseBoy()
         {
-            return managementList.Find(parkingBoyInList => parkingBoyInList == parkingBoy) == null;
+            var count = managementList.Count;
+            if (count < 1)
+            {
+                return null;
+            }
+
+            var randomIndex = new Random().Next(count - 1);
+            return managementList[randomIndex];
         }
     }
 }

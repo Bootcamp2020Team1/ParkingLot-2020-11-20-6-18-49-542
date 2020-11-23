@@ -35,6 +35,11 @@ namespace ParkingLotCLI
             return ticket;
         }
 
+        public void AddParkingLots(List<ParkingLot> parkingLots)
+        {
+            parkingLots.ForEach(parkingLot => ParkingLots.Add(parkingLot));
+        }
+
         public Car Fetch(Ticket ticket, out string errorMessage)
         {
             errorMessage = string.Empty;
