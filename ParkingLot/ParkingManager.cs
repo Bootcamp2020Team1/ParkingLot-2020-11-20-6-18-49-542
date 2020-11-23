@@ -21,6 +21,11 @@ namespace ParkingLot
             parkingBoys.Add(parkingBoy);
         }
 
+        public void RemoveParkingBoy(ParkingBoy parkingBoy)
+        {
+            parkingBoys.Remove(parkingBoy);
+        }
+
         public new Ticket ParkACarAndGetTicket(string license)
         {
             return SelectedParkingBoy().ParkACarAndGetTicket(license);
@@ -28,7 +33,7 @@ namespace ParkingLot
 
         private ParkingBoy SelectedParkingBoy()
         {
-            Random seed = new Random();
+            var seed = new Random();
             return parkingBoys[seed.Next(0, parkingBoys.Count)];
         }
     }

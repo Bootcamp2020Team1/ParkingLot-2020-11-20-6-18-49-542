@@ -23,7 +23,7 @@ namespace ParkingLot
                 return null;
             }
 
-            List<int> availablePositions = new List<int>();
+            var availablePositions = new List<int>();
             foreach (var parkingLot in parkingLots)
             {
                 availablePositions.Add(parkingLot.GetAvailablePosition());
