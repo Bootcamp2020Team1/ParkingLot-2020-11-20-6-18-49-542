@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace ParkingLotCLI
 {
+    //To remove duplicate code, I extract a class called PersonCanPark
     public class ServiceManager : PersonCanPark
     {
         private readonly List<ParkingBoy> managementList;
@@ -43,6 +44,17 @@ namespace ParkingLotCLI
             }
 
             return parkingBoy.Fetch(ticket, out errorMessage);
+        }
+
+        public bool RemoveParkingBoy(ParkingBoy parkingBoy)
+        {
+            if (managementList.Contains(parkingBoy))
+            {
+                managementList.Remove(parkingBoy);
+                return true;
+            }
+
+            return false;
         }
 
         private ParkingBoy ChooseBoy()

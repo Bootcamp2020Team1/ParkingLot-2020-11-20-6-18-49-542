@@ -130,5 +130,20 @@ namespace ParkingLotCLITest
             //then
             Assert.Equal("Not enough position.", errorMessage);
         }
+
+        [Fact]
+        public void Should_Manager_Remove_Parking_Boy_Given_Parking_Boy_Existed()
+        {
+            //given
+            var parkingBoy = new ParkingBoy(new List<ParkingLot>() { });
+            var serviceManager = new ServiceManager(new List<ParkingLot>() { new ParkingLot(0) });
+            serviceManager.AddParkingBoy(parkingBoy);
+
+            //when
+            var deleteResult = serviceManager.RemoveParkingBoy(parkingBoy);
+
+            //then
+            Assert.True(deleteResult);
+        }
     }
 }
