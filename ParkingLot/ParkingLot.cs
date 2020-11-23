@@ -5,9 +5,9 @@ namespace ParkingLot
     using System;
     public class ParkingLot
     {
-        private List<string> cars = new List<string>();
-        private int capacity;
-        private int parkingLotNumber;
+        private readonly int capacity;
+        private readonly int parkingLotNumber;
+        private readonly List<string> cars = new List<string>();
 
         public ParkingLot(int capacity, int parkingLotNumber)
         {

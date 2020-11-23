@@ -16,7 +16,7 @@ namespace ParkingLotTest
             var parkingLotList = new List<ParkingLot.ParkingLot>
             {
                 parkingLot1,
-                parkingLot2
+                parkingLot2,
             };
             var parkingManager = new ParkingManager(parkingLotList);
             parkingManager.AddParkingBoy(new NormalParkingBoy(parkingLotList));

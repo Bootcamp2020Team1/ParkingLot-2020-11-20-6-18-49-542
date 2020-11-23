@@ -7,13 +7,13 @@ namespace ParkingLot
 {
     public class ParkingManager : ParkingBoy
     {
-        private List<ParkingLot> parkingLots = new List<ParkingLot>();
-        private List<ParkingBoy> parkingBoys = new List<ParkingBoy>();
+        private readonly List<ParkingLot> parkingLots = new List<ParkingLot>();
+        private readonly List<ParkingBoy> parkingBoys = new List<ParkingBoy>();
 
         public ParkingManager(List<ParkingLot> parkingLots) : base(parkingLots)
         {
             this.parkingLots = parkingLots;
-            this.parkingBoys.Add(this);
+            parkingBoys.Add(this);
         }
 
         public void AddParkingBoy(ParkingBoy parkingBoy)
@@ -21,7 +21,7 @@ namespace ParkingLot
             parkingBoys.Add(parkingBoy);
         }
 
-        public Ticket ParkACarAndGetTicket(string license)
+        public new Ticket ParkACarAndGetTicket(string license)
         {
             return SelectedParkingBoy().ParkACarAndGetTicket(license);
         }

@@ -7,14 +7,14 @@ namespace ParkingLot
 {
     public class SmartParkingBoy : ParkingBoy
     {
-        private List<ParkingLot> parkingLots = new List<ParkingLot>();
+        private readonly List<ParkingLot> parkingLots = new List<ParkingLot>();
 
         public SmartParkingBoy(List<ParkingLot> parkingLots) : base(parkingLots)
         {
             this.parkingLots = parkingLots;
         }
 
-        public Ticket ParkACarAndGetTicket(string license)
+        public new Ticket ParkACarAndGetTicket(string license)
         {
             var selectedParkingLotList = parkingLots.Where(parkinglot => CanPark(license, parkinglot)).ToList();
             if (selectedParkingLotList.Count == 0)
