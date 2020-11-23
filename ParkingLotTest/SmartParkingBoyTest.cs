@@ -12,22 +12,21 @@ namespace ParkingLotCLITest
         public void Should_Smart_Parking_Boy_Park_The_Car_To_Mutiple_Parking_Lots_And_Park_To_The_Parking_Lot_Has_More_Avaliable_Spaces()
         {
             //given
-            var id_1 = Guid.NewGuid();
-            var id_2 = Guid.NewGuid();
-            var parkingBoy = new SmartParkingBoy(new List<ParkingLot>() { new ParkingLot(id_1, 1), new ParkingLot(id_2, 2) });
+            var parkingLot2 = new ParkingLot(2);
+            var parkingBoy = new SmartParkingBoy(new List<ParkingLot>() { new ParkingLot(1), parkingLot2 });
 
             //when
             var ticket = parkingBoy.Park(new Car("car"), out _);
 
             //then
-            Assert.Equal(id_2.ToString(), ticket.ParkingLotID);
+            Assert.Contains(ticket.TicketNumber, parkingLot2.Tickets);
         }
 
         [Fact]
         public void Should_Smart_Parking_Boy_Park_A_Car_And_Get_Ticket()
         {
             //given
-            var expectedTicket = new Ticket("1234", "N98245");
+            var expectedTicket = new Ticket("N98245");
 
             //when
             var parkingBoy = new SmartParkingBoy(new List<ParkingLot>() { new ParkingLot() });
@@ -76,7 +75,7 @@ namespace ParkingLotCLITest
             var expectedCar = new Car("N98245");
             var parkingBoy = new SmartParkingBoy(new List<ParkingLot>() { new ParkingLot() });
             parkingBoy.Park(expectedCar, out _);
-            var wrongTicket = new Ticket("123", "wrongNumber");
+            var wrongTicket = new Ticket("wrongNumber");
 
             //when
             var car = parkingBoy.Fetch(wrongTicket, out _);
@@ -136,8 +135,8 @@ namespace ParkingLotCLITest
         {
             //given
             var guid = Guid.NewGuid();
-            var parkingBoy = new SmartParkingBoy(new List<ParkingLot>() { new ParkingLot(guid, 10) });
-            var wrongTicket = new Ticket(guid.ToString(), "wrongNumber");
+            var parkingBoy = new SmartParkingBoy(new List<ParkingLot>() { new ParkingLot(10) });
+            var wrongTicket = new Ticket("wrongNumber");
 
             //when
             var errorMessage = string.Empty;

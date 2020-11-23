@@ -11,7 +11,7 @@ namespace ParkingLotCLITest
         public void Should__Manager_Specify_The_Parking_Boy_To_Park_The_Car_Given_The_Parking_Boy_Is_In_ManagementList()
         {
             //given
-            var expectedTicket = new Ticket("1234", "N98245");
+            var expectedTicket = new Ticket("N98245");
             var serviceManager = new ServiceManager(new List<ParkingLot>() { new ParkingLot() });
             var parkingBoy = new ParkingBoy(new List<ParkingLot>() { });
             serviceManager.AddParkingBoy(parkingBoy);
@@ -43,7 +43,7 @@ namespace ParkingLotCLITest
         public void Should_Manager_Park_A_Car_And_Get_Ticket()
         {
             //given
-            var expectedTicket = new Ticket("1234", "N98245");
+            var expectedTicket = new Ticket("N98245");
 
             //when
             var parkingBoy = new ServiceManager(new List<ParkingLot>() { new ParkingLot() });
@@ -72,16 +72,14 @@ namespace ParkingLotCLITest
         public void Should_Manager_Park_The_Car_To_Mutiple_Parking_Lots_Sequentially()
         {
             //given
-            var id_1 = Guid.NewGuid();
-            var id_2 = Guid.NewGuid();
-
-            var parkingBoy = new ServiceManager(new List<ParkingLot>() { new ParkingLot(id_1, 1), new ParkingLot(id_2, 2) });
+            var parkingLot1 = new ParkingLot(1);
+            var parkingBoy = new ServiceManager(new List<ParkingLot>() { parkingLot1, new ParkingLot(2) });
 
             //when
             var ticket = parkingBoy.Park(new Car("car"), out _);
 
             //then
-            Assert.Equal(id_1.ToString(), ticket.ParkingLotID);
+            Assert.Contains(ticket.TicketNumber, parkingLot1.Tickets);
         }
 
         [Fact]
@@ -111,7 +109,7 @@ namespace ParkingLotCLITest
 
             //when
             var errorMessage = string.Empty;
-            serviceManager.SpecifyParkingBoyToFetch(new Ticket(ticket.ParkingLotID, "wrong"), out errorMessage);
+            serviceManager.SpecifyParkingBoyToFetch(new Ticket("wrong"), out errorMessage);
 
             //then
             Assert.Equal("Unrecognized parking ticket.", errorMessage);

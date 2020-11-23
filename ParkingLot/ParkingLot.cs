@@ -11,7 +11,6 @@ namespace ParkingLotCLI
         public ParkingLot()
         {
             cars = new Dictionary<string, Car>();
-            ParkingLotID = Guid.NewGuid().ToString();
             Capacity = 10;
         }
 
@@ -20,12 +19,6 @@ namespace ParkingLotCLI
             Capacity = capacity;
         }
 
-        public ParkingLot(Guid id, int capacity) : this(capacity)
-        {
-            ParkingLotID = id.ToString();
-        }
-
-        public string ParkingLotID { get; }
         public int Capacity { get; }
         public int PositionAvailable => Capacity - cars.Count;
 
@@ -48,7 +41,7 @@ namespace ParkingLotCLI
                 return null;
             }
 
-            var ticket = new Ticket(ParkingLotID, GenerateUniqueTicketNumber());
+            var ticket = new Ticket(GenerateUniqueTicketNumber());
             cars.Add(ticket.TicketNumber, car);
             return ticket;
         }

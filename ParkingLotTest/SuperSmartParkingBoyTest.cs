@@ -12,24 +12,22 @@ namespace ParkingLotCLITest
         public void Should__Super_Smart_Parking_Boy_Park_The_Car_To_Mutiple_Parking_Lots_And_Park_To_The_Parking_Lot_Has_Largest_AvaliablePositionRate()
         {
             //given
-            var id_1 = Guid.NewGuid();
-            var id_2 = Guid.NewGuid();
-
-            var parkingBoy = new SuperSmartParkingBoy(new List<ParkingLot>() { new ParkingLot(id_1, 2), new ParkingLot(id_2, 1) });
+            var parkingLot1 = new ParkingLot(2);
+            var parkingBoy = new SuperSmartParkingBoy(new List<ParkingLot>() { parkingLot1, new ParkingLot(1) });
+            parkingBoy.Park(new Car("car1"), out _);
 
             //when
-            parkingBoy.Park(new Car("car1"), out _);
             var ticket = parkingBoy.Park(new Car("car2"), out _);
 
             //then
-            Assert.Equal(id_1.ToString(), ticket.ParkingLotID);
+            Assert.Contains(ticket.TicketNumber, parkingLot1.Tickets);
         }
 
         [Fact]
         public void Should_Super_Smart_Parking_Boy_Park_A_Car_And_Get_Ticket()
         {
             //given
-            var expectedTicket = new Ticket("1234", "N98245");
+            var expectedTicket = new Ticket("N98245");
 
             //when
             var parkingBoy = new SuperSmartParkingBoy(new List<ParkingLot>() { new ParkingLot() });
@@ -78,7 +76,7 @@ namespace ParkingLotCLITest
             var expectedCar = new Car("N98245");
             var parkingBoy = new SuperSmartParkingBoy(new List<ParkingLot>() { new ParkingLot() });
             parkingBoy.Park(expectedCar, out _);
-            var wrongTicket = new Ticket("123", "wrongNumber");
+            var wrongTicket = new Ticket("wrongNumber");
 
             //when
             var car = parkingBoy.Fetch(wrongTicket, out _);
@@ -137,9 +135,8 @@ namespace ParkingLotCLITest
         public void Should_Get_Error_Message_Unrecognized_parking_ticket_Given_A_Wrong_Ticket_When_Fetch_Car()
         {
             //given
-            var guid = Guid.NewGuid();
-            var parkingBoy = new SuperSmartParkingBoy(new List<ParkingLot>() { new ParkingLot(guid, 10) });
-            var wrongTicket = new Ticket(guid.ToString(), "wrongNumber");
+            var parkingBoy = new SuperSmartParkingBoy(new List<ParkingLot>() { new ParkingLot(10) });
+            var wrongTicket = new Ticket("wrongNumber");
 
             //when
             var errorMessage = string.Empty;

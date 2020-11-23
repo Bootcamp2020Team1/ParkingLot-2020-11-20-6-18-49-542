@@ -12,15 +12,10 @@ namespace ParkingLotCLI
             ParkingLots = parkingLots;
         }
 
-        public List<string> IdOfParkingLots
-        {
-            get
-            {
-                return ParkingLots.Select(parkingLot => parkingLot.ParkingLotID).ToList();
-            }
-        }
+        public int ParkingLotsCount => ParkingLots.Count;
 
         protected List<ParkingLot> ParkingLots { get; }
+
         public void AddParkingLots(List<ParkingLot> parkingLots)
         {
             parkingLots.ForEach(parkingLot => ParkingLots.Add(parkingLot));
@@ -50,6 +45,7 @@ namespace ParkingLotCLI
             var parkingLot = GetParkingLotByTicket(ticket);
             if (parkingLot == null)
             {
+                errorMessage = "Unrecognized parking ticket.";
                 return null;
             }
 
@@ -68,7 +64,12 @@ namespace ParkingLotCLI
 
         private ParkingLot GetParkingLotByTicket(Ticket ticket)
         {
-            return ParkingLots.Find(parkingLot => parkingLot.ParkingLotID == ticket.ParkingLotID);
+            if (ticket == null || string.IsNullOrEmpty(ticket.TicketNumber))
+            {
+                return null;
+            }
+
+            return ParkingLots.Find(parkingLot => parkingLot.Tickets.Contains(ticket.TicketNumber));
         }
     }
 }

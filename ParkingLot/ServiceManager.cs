@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 
 namespace ParkingLotCLI
 {
@@ -16,7 +14,7 @@ namespace ParkingLotCLI
 
         public void AddParkingBoy(ParkingBoy parkingBoy)
         {
-            if (parkingBoy.IdOfParkingLots.Count == 0)
+            if (parkingBoy.ParkingLotsCount == 0)
             {
                 parkingBoy.AddParkingLots(ParkingLots);
                 managementList.Add(parkingBoy);
