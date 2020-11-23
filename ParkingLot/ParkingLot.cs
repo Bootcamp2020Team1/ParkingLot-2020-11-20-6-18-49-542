@@ -6,6 +6,7 @@
 
     public class ParkingLot
     {
+        private Manager manager;
         private List<ParkingBoy> manageParkingBoys = new List<ParkingBoy>();
         private List<Car> parkedCars = new List<Car>();
 
@@ -37,6 +38,11 @@
         public void AddParkingBoy(ParkingBoy newParkingBoy)
         {
             manageParkingBoys.Add(newParkingBoy);
+        }
+
+        public void AsignManager(Manager manager)
+        {
+            this.manager = manager;
         }
 
         public Car FetchCarLot(Ticket ticket)
