@@ -31,6 +31,11 @@ namespace ParkingLot
             return SelectedParkingBoy().ParkACarAndGetTicket(license);
         }
 
+        public new string FetchACarWithTicket(Ticket ticket)
+        {
+            return SelectedParkingBoy().FetchACarWithTicket(ticket);
+        }
+
         private ParkingBoy SelectedParkingBoy()
         {
             var seed = new Random();
