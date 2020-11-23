@@ -5,10 +5,10 @@ using Xunit;
 
 namespace ParkingLotTest
 {
-    public class ParkingBoyModelsTest
+    public class ParkingBoyTest
     {
         private readonly ParkingBoy myBoy;
-        public ParkingBoyModelsTest()
+        public ParkingBoyTest()
         {
             myBoy = new ParkingBoy(DataLoader.GetParkingLots());
         }
@@ -91,12 +91,48 @@ namespace ParkingLotTest
         public void Should_simpleBoy_park_per_sequence()
         {
             string parkMessage = myBoy.TryPark(new Car("test plate1"), out Ticket ticket1);
+            myBoy.TryPark(new Car("test plate2"), out Ticket ticket2);
+            myBoy.TryPark(new Car("test plate3"), out Ticket ticket3);
+            myBoy.TryPark(new Car("test plate4"), out Ticket ticket4);
 
             Assert.Equal(string.Empty, parkMessage);
+            Assert.Equal("MyLot2", ticket4.LotName);
 
             string fetchMessage = myBoy.TryFetch(ticket1, out Car car1);
 
             Assert.Equal("test plate1", car1.Plate);
+        }
+
+        [Fact]
+        public void Should_smartBoy_park_per_availabe_positions()
+        {
+            var mySmartBoy = new SmartParkingBoy(DataLoader.GetParkingLots());
+
+            mySmartBoy.TryPark(new Car("test plate1"), out Ticket ticket1);
+            mySmartBoy.TryPark(new Car("test plate2"), out Ticket ticket2);
+            mySmartBoy.TryPark(new Car("test plate3"), out Ticket ticket3);
+            mySmartBoy.TryPark(new Car("test plate4"), out Ticket ticket4);
+
+            Assert.Equal("MyLot2", ticket1.LotName);
+            Assert.Equal("MyLot2", ticket2.LotName);
+            Assert.Equal("MyLot2", ticket3.LotName);
+            Assert.Equal("MyLot2", ticket4.LotName);
+        }
+
+        [Fact]
+        public void Should_superSmartBoy_park_per_availabe_ratio()
+        {
+            var mySuperBoy = new SuperSmartParkingBoy(DataLoader.GetParkingLots());
+
+            mySuperBoy.TryPark(new Car("test plate1"), out Ticket ticket1);
+            mySuperBoy.TryPark(new Car("test plate2"), out Ticket ticket2);
+            mySuperBoy.TryPark(new Car("test plate3"), out Ticket ticket3);
+            mySuperBoy.TryPark(new Car("test plate4"), out Ticket ticket4);
+
+            Assert.Equal("MyLot2", ticket1.LotName);
+            Assert.Equal("MyLot1", ticket2.LotName);
+            Assert.Equal("MyLot2", ticket3.LotName);
+            Assert.Equal("MyLot2", ticket4.LotName);
         }
     }
 }

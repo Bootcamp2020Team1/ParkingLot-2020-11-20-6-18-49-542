@@ -12,8 +12,10 @@ namespace ParkingLot.DataModels
             this.managementList = managementList;
         }
 
+        public int ManagementListCount => this.managementList.Count;
         public void AddParkingBoy(ParkingBoy parkingBoy)
         {
+            parkingBoy.ParkingLots = this.ParkingLots;
             managementList.Add(parkingBoy);
         }
 
