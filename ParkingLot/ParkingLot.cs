@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ParkingLotCLI
 {
-    public class ParkingLot
+    public class ParkingLot : IParkable
     {
         private Dictionary<string, Car> cars;
         public ParkingLot()
@@ -27,25 +27,23 @@ namespace ParkingLotCLI
 
         public string ParkingLotID { get; }
         public int Capacity { get; }
-        public int PositionAvailable
-        {
-            get
-            {
-                return Capacity - cars.Count;
-            }
-        }
+        public int PositionAvailable => Capacity - cars.Count;
 
-        public bool IsFull
-        {
-            get
-            {
-                return PositionAvailable <= 0;
-            }
-        }
+        public bool IsFull => PositionAvailable <= 0;
 
-        internal Ticket AddCar(Car car)
+        public List<string> Tickets => cars.Select(car => car.Key).ToList();
+
+        public Ticket Park(Car car, out string errorMessage)
         {
-            if (IsFull || car == null || cars.ContainsValue(car))
+            errorMessage = string.Empty;
+
+            if (IsFull)
+            {
+                errorMessage = "Not enough position.";
+                return null;
+            }
+
+            if (car == null || cars.ContainsValue(car))
             {
                 return null;
             }
@@ -55,19 +53,19 @@ namespace ParkingLotCLI
             return ticket;
         }
 
-        internal Car GetCarByTicket(string ticketNumber)
+        public Car Fetch(Ticket ticket, out string errorMessage)
         {
-            if (ticketNumber == null || !cars.ContainsKey(ticketNumber))
+            errorMessage = string.Empty;
+
+            if (string.IsNullOrEmpty(ticket.TicketNumber) || !cars.ContainsKey(ticket.TicketNumber))
             {
+                errorMessage = "Unrecognized parking ticket.";
                 return null;
             }
 
-            return cars[ticketNumber];
-        }
-
-        internal bool RemoveTheCar(string ticketNumbre)
-        {
-            return cars.Remove(ticketNumbre);
+            var car = cars[ticket.TicketNumber];
+            cars.Remove(ticket.TicketNumber);
+            return car;
         }
 
         private string GenerateUniqueTicketNumber()

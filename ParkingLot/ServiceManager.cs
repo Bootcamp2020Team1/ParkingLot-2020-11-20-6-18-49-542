@@ -5,12 +5,14 @@ using System.Linq;
 
 namespace ParkingLotCLI
 {
-    public class ServiceManager : ParkingBoy
+    public class ServiceManager : IParkable
     {
         private readonly List<ParkingBoy> managementList;
+        private List<ParkingLot> parkingLots;
 
-        public ServiceManager(List<ParkingLot> parkingLots) : base(parkingLots)
+        public ServiceManager(List<ParkingLot> parkingLots)
         {
+            this.parkingLots = parkingLots;
             this.managementList = new List<ParkingBoy>();
         }
 
@@ -18,7 +20,7 @@ namespace ParkingLotCLI
         {
             if (parkingBoy.IdOfParkingLots.Count == 0)
             {
-                parkingBoy.AddParkingLots(ParkingLots);
+                parkingBoy.AddParkingLots(parkingLots);
                 managementList.Add(parkingBoy);
             }
         }
@@ -45,6 +47,51 @@ namespace ParkingLotCLI
             }
 
             return parkingBoy.Fetch(ticket, out errorMessage);
+        }
+
+        public Car Fetch(Ticket ticket, out string errorMessage)
+        {
+            errorMessage = string.Empty;
+            if (ticket == null)
+            {
+                errorMessage = "Please provide your parking ticket.";
+                return null;
+            }
+
+            var parkingLot = GetParkingLotByTicket(ticket);
+            if (parkingLot == null)
+            {
+                return null;
+            }
+
+            return parkingLot.Fetch(ticket, out errorMessage);
+        }
+
+        public Ticket Park(Car car, out string errorMessage)
+        {
+            var parkingLot = ChooseParkingLot();
+            if (parkingLot == null)
+            {
+                errorMessage = "Not enough position.";
+                return null;
+            }
+
+            return parkingLot.Park(car, out errorMessage);
+        }
+
+        private ParkingLot GetParkingLotByTicket(Ticket ticket)
+        {
+            return parkingLots.Find(parkingLot => parkingLot.IsFull == false);
+        }
+
+        private ParkingLot ChooseParkingLot()
+        {
+            return ChooseParkingLotSequentially();
+        }
+
+        private ParkingLot ChooseParkingLotSequentially()
+        {
+            return parkingLots.Find(parkingLot => parkingLot.IsFull == false);
         }
 
         private ParkingBoy ChooseBoy()
