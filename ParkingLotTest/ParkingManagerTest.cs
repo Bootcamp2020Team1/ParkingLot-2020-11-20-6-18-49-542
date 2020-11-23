@@ -12,8 +12,8 @@ namespace ParkingLotTest
         public void Should_Return_ticket_Parking_Manager()
         {
             //given
-            var parkingLot1 = new ParkingLot.ParkingLot(3, 1);
-            var parkingLot2 = new ParkingLot.ParkingLot(4, 2);
+            var parkingLot1 = new ParkingLot.ParkingLot(1, 3);
+            var parkingLot2 = new ParkingLot.ParkingLot(2, 4);
             var parkingLotList = new List<ParkingLot.ParkingLot>
             {
                 parkingLot1,

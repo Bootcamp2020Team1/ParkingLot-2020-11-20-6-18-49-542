@@ -26,12 +26,12 @@ namespace ParkingLot
             parkingBoys.Remove(parkingBoy);
         }
 
-        public new Ticket ParkACarAndGetTicket(string license)
+        public Ticket ParkACarAndGetTicket(string license)
         {
             return SelectedParkingBoy().ParkACarAndGetTicket(license);
         }
 
-        public new string FetchACarWithTicket(Ticket ticket)
+        public string FetchACarWithTicket(Ticket ticket)
         {
             return SelectedParkingBoy().FetchACarWithTicket(ticket);
         }

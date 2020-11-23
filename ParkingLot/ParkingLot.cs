@@ -2,14 +2,13 @@
 
 namespace ParkingLot
 {
-    using System;
     public class ParkingLot
     {
         private readonly int capacity;
         private readonly int parkingLotNumber;
         private readonly List<string> cars = new List<string>();
 
-        public ParkingLot(int capacity, int parkingLotNumber)
+        public ParkingLot(int parkingLotNumber, int capacity = 10)
         {
             this.capacity = capacity;
             this.parkingLotNumber = parkingLotNumber;

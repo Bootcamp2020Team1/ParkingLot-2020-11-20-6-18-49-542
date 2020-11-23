@@ -10,7 +10,7 @@ namespace ParkingLotTest
         [Fact]
         public void Should_Return_ticket()
         {
-            var parkingLot = new ParkingLot(4, 1);
+            var parkingLot = new ParkingLot(1, 4);
             var parkingLotList = new List<ParkingLot>();
             parkingLotList.Add(parkingLot);
             var parkingBoy = new ParkingBoy(parkingLotList);
@@ -37,7 +37,7 @@ namespace ParkingLotTest
         [Fact]
         public void Should_Fetch_Car_And_Return_Message()
         {
-            var parkingLot = new ParkingLot(4, 1);
+            var parkingLot = new ParkingLot(1, 4);
             var parkingLotList = new List<ParkingLot>();
             parkingLotList.Add(parkingLot);
             var parkingBoy = new ParkingBoy(parkingLotList);
@@ -52,7 +52,7 @@ namespace ParkingLotTest
         [InlineData("abc123", 1)]
         public void Should_Not_Fetch_Car_And_Return_Error_Message(string license, int parkingLotNumber)
         {
-            var parkingLot = new ParkingLot(4, 1);
+            var parkingLot = new ParkingLot(1, 4);
             var parkingLotList = new List<ParkingLot>();
             parkingLotList.Add(parkingLot);
             var parkingBoy = new ParkingBoy(parkingLotList);
@@ -67,7 +67,7 @@ namespace ParkingLotTest
         public void Should_Return_ticket_Normal_Parking_Boy()
         {
             var parkingLot1 = new ParkingLot(1, 1);
-            var parkingLot2 = new ParkingLot(4, 2);
+            var parkingLot2 = new ParkingLot(2, 4);
             var parkingLotList = new List<ParkingLot>();
             parkingLotList.Add(parkingLot1);
             parkingLotList.Add(parkingLot2);
@@ -77,6 +77,13 @@ namespace ParkingLotTest
             var expectedTicket = new Ticket("abc123", 2);
 
             Assert.Equal(expectedTicket.GetParkingLotNumber(), ticket.GetParkingLotNumber());
+        }
+
+        [Fact]
+        public void Should_Create_ParkingBoy_Without_Parking_Lot()
+        {
+            var parkingBoy = new ParkingBoy(null);
+            Assert.NotNull(parkingBoy);
         }
     }
 }
