@@ -21,6 +21,16 @@ namespace ParkingLot
 
         public string FetchCarCustomer(Ticket ticket, ParkingBoy parkingBoy)
         {
+            /*
+            string car = string.Empty;
+            if (parkingBoy is SmartParkingBoy)
+            {
+                SmartParkingBoy smartParkingBoy = (SmartParkingBoy)parkingBoy;
+                car = smartParkingBoy.FetchCarBoy(ticket);
+            }
+            if(parkingBoy is SuperSmartParkingBoy)
+            { }
+            */
             var car = parkingBoy.FetchCarBoy(ticket);
             return car;
         }

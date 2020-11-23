@@ -5,7 +5,6 @@ namespace ParkingLotTest
 
     public class FetchParkCarTest
     {
-        /*
         [Fact]
         public void Should_GetBoysParkingLots_return_ParkingLot_When_Add_ParkingLot_To_ParkingBoy()
         {
@@ -14,12 +13,12 @@ namespace ParkingLotTest
             var parkingBoy = new ParkingBoy("b1");
             parkingBoy.AddParkingLot(parkingLot);
             //when
-            ParkingLot actual = parkingBoy.GetBoysParkingLots()[0];
+            ParkingLot actual = parkingBoy.BoysParkingLots[0];
             var expexted = parkingLot;
             //then
             Assert.Equal(actual.Id, expexted.Id);
         }
-        */
+
         [Fact]
         public void Should_Return_Ticket_When_Park_Car()
         {
@@ -117,7 +116,6 @@ namespace ParkingLotTest
             //Assert.Equal(true, ticket.IsUsed);
         }
 
-        /*
         [Fact]
         public void Should_Park_To_ParkingLot_With_More_LeftPosition()
         {
@@ -140,6 +138,5 @@ namespace ParkingLotTest
             //customer.FetchCarCustomer(ticket, parkingBoy);
             //Assert.Equal(true, ticket.IsUsed);
         }
-        */
     }
 }

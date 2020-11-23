@@ -6,7 +6,7 @@ namespace ParkingLot
 {
     public class SmartParkingBoy : ParkingBoy
     {
-        private List<ParkingLot> boysParkingLots = new List<ParkingLot>();
+        //private List<ParkingLot> boysParkingLots = new List<ParkingLot>();
         public SmartParkingBoy(string id) : base(id)
         {
         }
@@ -15,7 +15,7 @@ namespace ParkingLot
         {
             ParkingLot availableLot = null;
             int maxLeftPosition = 0;
-            foreach (ParkingLot parkingLot in boysParkingLots)
+            foreach (ParkingLot parkingLot in BoysParkingLots)
             {
                 if (parkingLot.LeftPosition > maxLeftPosition)
                 {
@@ -23,8 +23,8 @@ namespace ParkingLot
                 }
             }
 
-            //availableLot = boysParkingLots.Find(parkingLot => parkingLot.LeftPosition == maxLeftPosition);
-            availableLot = boysParkingLots[1];
+            availableLot = BoysParkingLots.Find(parkingLot => parkingLot.LeftPosition == maxLeftPosition);
+            //availableLot = boysParkingLots[1];
             return availableLot;
         }
     }
