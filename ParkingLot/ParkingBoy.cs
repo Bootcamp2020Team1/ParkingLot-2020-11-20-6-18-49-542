@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ParkingLot
 {
-    public class ParkingBoy
+    public class ParkingBoy : IParkable
     {
         private List<ParkingLot> parkingLots = new List<ParkingLot>();
 

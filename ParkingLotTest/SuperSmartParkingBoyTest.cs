@@ -17,7 +17,7 @@ namespace ParkingLotTest
             var parkingLotList = new List<ParkingLot.ParkingLot>
             {
                 parkingLot1,
-                parkingLot2
+                parkingLot2,
             };
             //when
             var parkingBoy = new SuperSmartParkingBoy(parkingLotList);

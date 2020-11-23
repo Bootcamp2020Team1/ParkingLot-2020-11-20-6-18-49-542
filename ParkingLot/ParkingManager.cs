@@ -5,12 +5,12 @@ using System.Text;
 
 namespace ParkingLot
 {
-    public class ParkingManager : ParkingBoy
+    public class ParkingManager : IParkable
     {
         private readonly List<ParkingLot> parkingLots = new List<ParkingLot>();
-        private readonly List<ParkingBoy> parkingBoys = new List<ParkingBoy>();
+        private readonly List<IParkable> parkingBoys = new List<IParkable>();
 
-        public ParkingManager(List<ParkingLot> parkingLots) : base(parkingLots)
+        public ParkingManager(List<ParkingLot> parkingLots)
         {
             this.parkingLots = parkingLots;
             parkingBoys.Add(this);
@@ -36,7 +36,7 @@ namespace ParkingLot
             return SelectedParkingBoy().FetchACarWithTicket(ticket);
         }
 
-        private ParkingBoy SelectedParkingBoy()
+        private IParkable SelectedParkingBoy()
         {
             var seed = new Random();
             return parkingBoys[seed.Next(0, parkingBoys.Count)];
