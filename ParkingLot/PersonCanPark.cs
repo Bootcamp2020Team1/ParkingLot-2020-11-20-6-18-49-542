@@ -21,6 +21,17 @@ namespace ParkingLotCLI
             parkingLots.ForEach(parkingLot => ParkingLots.Add(parkingLot));
         }
 
+        public bool RemoveParkingLot(ParkingLot parkingLot)
+        {
+            if (ParkingLots.Contains(parkingLot))
+            {
+                ParkingLots.Remove(parkingLot);
+                return true;
+            }
+
+            return false;
+        }
+
         public Ticket Park(Car car, out string errorMessage)
         {
             var parkingLot = ChooseParkingLot();

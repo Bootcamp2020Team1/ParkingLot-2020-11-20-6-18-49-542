@@ -190,5 +190,47 @@ namespace ParkingLotCLITest
             //then
             Assert.Equal("Not enough position.", errorMessage);
         }
+
+        [Fact]
+        public void Should_Return_True_Given_Parking_Lot_Exist_When_Remove_ParkingLot()
+        {
+            //given
+            var parkingLot = new ParkingLot();
+            var parkingBoy = new SmartParkingBoy(new List<ParkingLot>() { parkingLot });
+
+            //when
+            var result = parkingBoy.RemoveParkingLot(parkingLot);
+
+            //then
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void Should_Return_False_Given_Parking_Lot_Not_Exist_When_Remove_ParkingLot()
+        {
+            //given
+            var parkingLot = new ParkingLot();
+            var parkingBoy = new SmartParkingBoy(new List<ParkingLot>() { });
+
+            //when
+            var result = parkingBoy.RemoveParkingLot(parkingLot);
+
+            //then
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Should_Remove_Parking_Lot_Given_Parking_Lot_Exist_When_Remove_ParkingLot()
+        {
+            //given
+            var parkingLot = new ParkingLot();
+            var parkingBoy = new SmartParkingBoy(new List<ParkingLot>() { parkingLot });
+
+            //when
+            var result = parkingBoy.RemoveParkingLot(parkingLot);
+
+            //then
+            Assert.Equal(0, parkingBoy.ParkingLotsCount);
+        }
     }
 }
